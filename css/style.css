@@ -402,6 +402,63 @@ p{ max-width: 68ch; }
   font-family: var(--mono); font-size:12px; color: var(--slate); margin-top: var(--sp-2);
 }
 
+/* ---- 3D lion image treatment ---- */
+.lion-3d-card{
+  perspective: 500px;
+}
+.lion-3d-card .cards{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+.lion-3d-card .card{
+  width: 100%;
+  height: 100%;
+  background: #16161d;
+  border: 2px solid #555555;
+  border-radius: 4px;
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform .5s;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(0,0,0,.25);
+}
+.lion-3d-card .card:hover{
+  transform: translateZ(10px) rotateX(20deg) rotateY(20deg);
+}
+.lion-3d-card .card img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  filter: grayscale(20%) contrast(1.05);
+  transition: transform .5s, filter .5s;
+}
+.lion-3d-card .card:hover img{
+  transform: scale(1.02);
+  filter: grayscale(0%) contrast(1.08);
+}
+.lion-3d-card .card_title{
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  transition: transform .5s;
+  font: 700 1.5rem monospace;
+  text-shadow: -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
+  pointer-events: none;
+}
+.lion-3d-card .card:hover .card_title{
+  transform: translateZ(50px) translateY(-50%);
+}
+
 /* ==========================================================================
    HERO
    ========================================================================== */
