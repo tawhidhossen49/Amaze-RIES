@@ -402,62 +402,6 @@ p{ max-width: 68ch; }
   font-family: var(--mono); font-size:12px; color: var(--slate); margin-top: var(--sp-2);
 }
 
-/* ---- 3D lion image treatment ---- */
-.lion-3d-card{
-  perspective: 500px;
-}
-.lion-3d-card .cards{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-}
-.lion-3d-card .card{
-  width: 100%;
-  height: 100%;
-  background: #16161d;
-  border: 2px solid #555555;
-  border-radius: 4px;
-  position: relative;
-  transform-style: preserve-3d;
-  will-change: transform;
-  transition: transform .5s;
-  overflow: hidden;
-  box-shadow: 0 18px 40px rgba(0,0,0,.25);
-}
-.lion-3d-card .card:hover{
-  transform: translateZ(10px) rotateX(20deg) rotateY(20deg);
-}
-.lion-3d-card .card img{
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  filter: grayscale(20%) contrast(1.05);
-  transition: transform .5s, filter .5s;
-}
-.lion-3d-card .card:hover img{
-  transform: scale(1.02);
-  filter: grayscale(0%) contrast(1.08);
-}
-.lion-3d-card .card_title{
-  color: #fff;
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  transition: transform .5s;
-  font: 700 1.5rem monospace;
-  text-shadow: -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-     1px 1px 0 #000;
-  pointer-events: none;
-}
-.lion-3d-card .card:hover .card_title{
-  transform: translateZ(50px) translateY(-50%);
-}
 
 /* ==========================================================================
    HERO
@@ -471,6 +415,81 @@ p{ max-width: 68ch; }
   display:grid; grid-template-columns: 7fr 5fr; gap: var(--sp-8); align-items:flex-end; width:100%;
 }
 .hero-photo{ aspect-ratio: 4/5; }
+.hero-card-wrap{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height: 360px;
+  width: 100%;
+}
+.hero-card-wrap .card{
+  width: min(320px, 86vw);
+  height: min(460px, 72vw);
+  background: #313131;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: 0.2s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 24px 50px rgba(0,0,0,.28);
+  border: 0;
+  padding: 0;
+}
+.hero-card-wrap .img{
+  width: min(210px, 70%);
+  height: auto;
+  max-height: 40%;
+  position: absolute;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: transform .25s ease, filter .25s ease, opacity .25s ease;
+  z-index: 1;
+  display: block;
+  filter: drop-shadow(0 16px 28px rgba(0,0,0,.34));
+}
+.hero-card-wrap .textBox{
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 24px 24px 28px;
+  margin-top: 138px;
+  transition: opacity .25s ease;
+  z-index: 2;
+  text-align: center;
+}
+.hero-card-wrap .textBox > .text {
+  font-weight: bold;
+}
+.hero-card-wrap .textBox > .head {
+  font-size: 20px;
+}
+.hero-card-wrap .textBox > .price {
+  font-size: 17px;
+}
+.hero-card-wrap .textBox > span {
+  font-size: 12px;
+  color: lightgrey;
+}
+.hero-card-wrap .card:hover > .textBox {
+  opacity: 1;
+}
+.hero-card-wrap .card:hover > .img {
+  transform: translateX(-50%) translateY(-6px);
+  max-height: 70%;
+  filter: blur(6px) brightness(.9);
+  opacity: .86;
+}
+.hero-card-wrap .card:hover {
+  transform: scale(1.04);
+}
 .scroll-cue{
   position:absolute; left:96px; bottom:40px;
   width:32px; height:32px; border:1px solid var(--fog); border-radius:50%;
@@ -669,6 +688,105 @@ p{ max-width: 68ch; }
 }
 @media (max-width: 900px){
   .overlay-card{ position:static; margin-top:0; max-width:none; }
+}
+
+/* ---- footer social card ---- */
+.footer-social-card{
+  margin-top: var(--sp-5);
+  max-width: fit-content;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  gap: 1rem;
+  backdrop-filter: blur(15px);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.192),
+    inset 0 0 5px rgba(255, 255, 255, 0.274), 0 5px 5px rgba(0, 0, 0, 0.164);
+  transition: 0.5s;
+}
+.footer-social-card:hover {
+  background: rgba(173, 173, 173, 0.05);
+}
+.footer-social-card ul {
+  padding: 1rem;
+  display: flex;
+  list-style: none;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.footer-social-card ul li {
+  cursor: pointer;
+}
+.footer-social-card .svg {
+  transition: all 0.3s;
+  padding: 1rem;
+  height: 60px;
+  width: 60px;
+  border-radius: 100%;
+  color: rgb(255, 174, 0);
+  fill: currentColor;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3),
+    inset 0 0 5px rgba(255, 255, 255, 0.5), 0 5px 5px rgba(0, 0, 0, 0.164);
+}
+.footer-social-card .text {
+  opacity: 0;
+  border-radius: 5px;
+  padding: 5px;
+  transition: all 0.3s;
+  color: rgb(255, 174, 0);
+  background-color: rgba(255, 255, 255, 0.3);
+  position: absolute;
+  z-index: 9999;
+  box-shadow: -5px 0 1px rgba(153, 153, 153, 0.2),
+    -10px 0 1px rgba(153, 153, 153, 0.2),
+    inset 0 0 20px rgba(255, 255, 255, 0.3),
+    inset 0 0 5px rgba(255, 255, 255, 0.5), 0 5px 5px rgba(0, 0, 0, 0.082);
+}
+.footer-social-card .iso-pro {
+  transition: 0.5s;
+  position: relative;
+}
+.footer-social-card .iso-pro:hover a > .svg {
+  transform: translate(15px, -15px);
+  border-radius: 100%;
+}
+.footer-social-card .iso-pro:hover .text {
+  opacity: 1;
+  transform: translate(25px, -2px) skew(-5deg);
+}
+.footer-social-card .iso-pro:hover .svg {
+  transform: translate(5px, -5px);
+}
+.footer-social-card .iso-pro span {
+  opacity: 0;
+  position: absolute;
+  color: #1877f2;
+  border-color: #1877f2;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3),
+    inset 0 0 5px rgba(255, 255, 255, 0.5), 0 5px 5px rgba(0, 0, 0, 0.164);
+  border-radius: 50%;
+  transition: all 0.3s;
+  height: 60px;
+  width: 60px;
+}
+.footer-social-card .iso-pro:hover span {
+  opacity: 1;
+}
+.footer-social-card .iso-pro:hover span:nth-child(1) {
+  opacity: 0.2;
+}
+.footer-social-card .iso-pro:hover span:nth-child(2) {
+  opacity: 0.4;
+  transform: translate(5px, -5px);
+}
+.footer-social-card .iso-pro:hover span:nth-child(3) {
+  opacity: 0.6;
+  transform: translate(10px, -10px);
 }
 
 /* ---- marquee (network teaser) ---- */
