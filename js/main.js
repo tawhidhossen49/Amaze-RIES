@@ -4,10 +4,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---- nav scroll state ---- */
   const nav = document.querySelector('.site-nav');
+  let lastScrollY = window.scrollY;
+  
+  // Check if we're on specific pages for black background
+  const path = window.location.pathname;
+  const isBlackBgPage = path.includes('about.html') || 
+                        path.includes('projects.html') || 
+                        path.includes('community.html') || 
+                        path.includes('contact.html');
+  
+  if (isBlackBgPage) {
+    nav.classList.add('black-bg');
+    nav.classList.add('visible');
+  }
+  
   const onScroll = () => {
     if (!nav) return;
+    
+    const currentScrollY = window.scrollY;
+    
+    // Show/hide nav based on scroll
+    if (currentScrollY > 40) {
+      nav.classList.add('visible');
+    } else {
+      nav.classList.remove('visible');
+    }
+    
+    // Add scrolled class for styling
     if (window.scrollY > 40) nav.classList.add('scrolled');
     else nav.classList.remove('scrolled');
+    
+    lastScrollY = currentScrollY;
   };
   window.addEventListener('scroll', onScroll, { passive:true });
   onScroll();
