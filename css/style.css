@@ -200,7 +200,7 @@ p{ max-width: 68ch; }
   letter-spacing: .08em;
   text-transform: uppercase;
   background: transparent;
-  color: var(--ink);
+  color: #ffffff;
   cursor: pointer;
   overflow: hidden;
   isolation: isolate;
