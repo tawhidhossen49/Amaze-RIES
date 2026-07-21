@@ -487,8 +487,12 @@ p{ max-width: 68ch; }
   background-position: -100px 100px, -100px 100px; 
   transform: rotate3d(0.5, 1, 0, 30deg); 
   transform: perspective(180px) rotateX(60deg) translateY(2px); 
-  box-shadow: 0px 10px 10px rgb(1, 49, 182); 
+  box-shadow: 0px 10px 15px #44ad53; 
 } 
+
+.parent .button svg {
+  fill: #ffffff !important;
+}
 
 button { 
   border: none; 
