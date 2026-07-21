@@ -409,7 +409,7 @@ p{ max-width: 68ch; }
 .hero-watermark{
   position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);
   width:min(56vw, 760px); aspect-ratio:1;
-  opacity:.05; pointer-events:none; z-index:0;
+  opacity:.08; pointer-events:none; z-index:0;
 }
 .hero-watermark img{ width:100%; height:100%; object-fit:contain; }
 @media (max-width:900px){
@@ -451,15 +451,59 @@ p{ max-width: 68ch; }
   display:flex; align-items:center; gap:12px;
   font-family: var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color: var(--fog);
 }
-.scroll-cue .dot{
-  width:32px; height:32px; border:1px solid var(--fog); border-radius:50%;
-  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+.scroll-arrow{
+  width:32px; height:32px;
+  flex-shrink:0;
 }
 .accent{ color: var(--brass); }
 @media (max-width: 900px){
   .hero{ padding-top:130px; min-height:auto; padding-bottom: var(--sp-8); }
   .hero-grid{ grid-template-columns:1fr; }
   .scroll-cue{ left:20px; position:static; margin-top: var(--sp-7); }
+}
+
+.parent { 
+  width: 100%; 
+  display: flex; 
+  justify-content: flex-start; 
+  align-items: center; 
+  margin-top: var(--sp-4);
+} 
+
+.child { 
+  width: 50px; 
+  height: 50px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  transform-style: preserve-3d; 
+  transition: all 0.5s ease-in-out; 
+  border-radius: 50%; 
+  margin: 0 5px; 
+} 
+
+.child:hover { 
+  background-color: black; 
+  background-position: -100px 100px, -100px 100px; 
+  transform: rotate3d(0.5, 1, 0, 30deg); 
+  transform: perspective(180px) rotateX(60deg) translateY(2px); 
+  box-shadow: 0px 10px 10px rgb(1, 49, 182); 
+} 
+
+button { 
+  border: none; 
+  background-color: transparent; 
+  font-size: 20px; 
+} 
+
+.button:hover { 
+  width: inherit; 
+  height: inherit; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  transform: translate3d(0px, 0px, 15px) perspective(180px) rotateX(-35deg) translateY(2px); 
+  border-radius: 50%; 
 }
 
 /* ==========================================================================
