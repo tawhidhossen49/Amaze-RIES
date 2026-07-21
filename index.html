@@ -3,27 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARISE — Research, Innovation & Exploration Society</title>
-<meta name="description" content="ARISE is the independent research division of AMAZE Consortium. Research begins with curiosity. Evidence builds understanding.">
+<title>ARIES — Research, Innovation & Exploration Society</title>
+<meta name="description" content="ARIES is the independent research division of AMAZE Consortium. Research begins with curiosity. Evidence builds understanding.">
 <link rel="canonical" href="https://riesresearch.org/">
-<meta property="og:title" content="ARISE — Research, Innovation & Exploration Society">
-<meta property="og:description" content="ARISE is the independent research division of AMAZE Consortium. Research begins with curiosity. Evidence builds understanding.">
+<meta property="og:title" content="ARIES — Research, Innovation & Exploration Society">
+<meta property="og:description" content="ARIES is the independent research division of AMAZE Consortium. Research begins with curiosity. Evidence builds understanding.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://picsum.photos/id/1074/900/1125">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#1F2E23">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
+<link rel="icon" type="image/png" sizes="256x256" href="img/favicon-256.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body data-page="home">
+
+<div class="intro-curtain" id="introCurtain" aria-hidden="true">
+  <img class="intro-mark" src="img/aries-logo.png" alt="">
+</div>
+<script>if(sessionStorage.getItem('ariseIntroPlayed')){document.getElementById('introCurtain').style.display='none';}</script>
 
 <a href="#main" class="skip-link">Skip to content</a>
 
 <nav class="site-nav">
-  <a href="index.html" class="nav-mark">ARISE<span>AMAZE CONSORTIUM</span></a>
+  <a href="index.html" class="nav-mark">
+    <img class="mark-icon" src="img/aries-logo.png" alt="">
+    <span class="nav-mark-word">ARIES<span class="nav-mark-sub">AMAZE CONSORTIUM &middot; RESEARCH DIVISION</span></span>
+  </a>
   <div class="nav-links">
     <a href="about.html">About</a>
     <a href="research.html">Research</a>
@@ -50,44 +59,32 @@
 
 <!-- HERO -->
 <header class="hero bg-archive">
+  <canvas class="hero-network" id="heroNetwork" aria-hidden="true"></canvas>
   <div class="wrap hero-grid">
     <div class="reveal-stagger">
-      <span class="kicker">AMAZE Consortium — Research Division</span>
-      <h1>Research begins with curiosity. It does not end with an answer.</h1>
-      <p class="dek" style="margin-top:24px;">ARISE is an independent research society for people who examine things closely — students, professionals, and self-taught researchers working across science, culture, and design, without regard to institutional affiliation.</p>
+      <span class="kicker">Inquire. Discover. Innovate.</span>
+      <h1>Research begins with <span class="accent">curiosity.</span> It does not end with an answer.</h1>
+      <p class="dek" style="margin-top:24px;">ARIES is an independent research society for people who examine things closely — students, professionals, and self-taught researchers working across science, culture, and design, without regard to institutional affiliation.</p>
     </div>
-    <div class="hero-card-wrap reveal">
-      <div class="card">
-        <svg class="img" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="100%" height="100%" version="1.1" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 784.37 1277.39" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <g id="Layer_x0020_1">
-            <metadata id="CorelCorpID_0Corel-Layer"></metadata>
-            <g id="_1421394342400">
-              <g>
-                <polygon fill="#343434" fill-rule="nonzero" points="392.07,0 383.5,29.11 383.5,873.74 392.07,882.29 784.13,650.54"></polygon>
-                <polygon fill="#8C8C8C" fill-rule="nonzero" points="392.07,0 -0,650.54 392.07,882.29 392.07,472.33"></polygon>
-                <polygon fill="#3C3C3B" fill-rule="nonzero" points="392.07,956.52 387.24,962.41 387.24,1263.28 392.07,1277.38 784.37,724.89"></polygon>
-                <polygon fill="#8C8C8C" fill-rule="nonzero" points="392.07,1277.38 392.07,956.52 -0,724.89"></polygon>
-                <polygon fill="#141414" fill-rule="nonzero" points="392.07,882.29 784.13,650.54 392.07,472.33"></polygon>
-                <polygon fill="#393939" fill-rule="nonzero" points="0,650.54 392.07,882.29 392.07,472.33"></polygon>
-              </g>
-            </g>
-          </g>
-        </svg>
-        <div class="textBox">
-          <p class="text head">Ethereum</p>
-          <span>Cryptocurrency</span>
-          <p class="text price">1.654,34€</p>
-        </div>
+    <div class="hero-medallion-wrap reveal">
+      <div class="medallion-ring r3"></div>
+      <div class="medallion-ring r2"></div>
+      <div class="medallion-ring"></div>
+      <div class="medallion-glow"></div>
+      <div class="medallion-ground"></div>
+      <div class="medallion-stage">
+        <img class="medallion-img" src="img/aries-logo.png" alt="ARIES — AMAZE Research, Innovation &amp; Exploration Society seal">
       </div>
     </div>
   </div>
-  <div class="scroll-cue">↓</div>
+  <div class="scroll-cue"><span class="dot">↓</span> Scroll to Explore</div>
 </header>
 
 <!-- PHILOSOPHY -->
-<section class="section bg-ink">
-  <div class="wrap center reveal" style="max-width:900px;">
-    <h3 style="font-size:32px;">"Evidence builds understanding. Innovation transforms insight into action. We hold each stage to the same standard: nothing is published here that hasn't been checked, argued with, and checked again."</h3>
+<section class="section bg-ink philosophy-pin" id="philosophyPin">
+  <div class="philosophy-sticky">
+    <span class="philosophy-counter" aria-hidden="true"><span class="pc-current">01</span>&nbsp;/&nbsp;03</span>
+    <h3 class="philosophy-text" style="font-size:32px;"><span class="pw" data-stage="1">&ldquo;Evidence</span> <span class="pw" data-stage="1">builds</span> <span class="pw" data-stage="1">understanding.</span> <span class="pw" data-stage="2">Innovation</span> <span class="pw" data-stage="2">transforms</span> <span class="pw" data-stage="2">insight</span> <span class="pw" data-stage="2">into</span> <span class="pw" data-stage="2">action.</span> <span class="pw" data-stage="3">We</span> <span class="pw" data-stage="3">hold</span> <span class="pw" data-stage="3">each</span> <span class="pw" data-stage="3">stage</span> <span class="pw" data-stage="3">to</span> <span class="pw" data-stage="3">the</span> <span class="pw" data-stage="3">same</span> <span class="pw" data-stage="3">standard:</span> <span class="pw" data-stage="3">nothing</span> <span class="pw" data-stage="3">is</span> <span class="pw" data-stage="3">published</span> <span class="pw" data-stage="3">here</span> <span class="pw" data-stage="3">that</span> <span class="pw" data-stage="3">hasn't</span> <span class="pw" data-stage="3">been</span> <span class="pw" data-stage="3">checked,</span> <span class="pw" data-stage="3">argued</span> <span class="pw" data-stage="3">with,</span> <span class="pw" data-stage="3">and</span> <span class="pw" data-stage="3">checked</span> <span class="pw" data-stage="3">again.&rdquo;</span></h3>
   </div>
 </section>
 
@@ -158,7 +155,7 @@
 <section class="section bg-parchment">
   <div class="wrap reveal">
     <span class="kicker">The People Behind the Work</span>
-    <p style="max-width:60ch; margin-top:8px; margin-bottom:40px;">ARISE researchers are not employees of a single lab. They are practitioners, doctoral candidates, retired engineers, and self-taught specialists who chose rigor over credentials.</p>
+    <p style="max-width:60ch; margin-top:8px; margin-bottom:40px;">ARIES researchers are not employees of a single lab. They are practitioners, doctoral candidates, retired engineers, and self-taught specialists who chose rigor over credentials.</p>
   </div>
   <div class="marquee">
     <div class="marquee-track">
@@ -182,16 +179,11 @@
   <div class="wrap" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
     <h2>If you examine things closely, you already qualify.</h2>
     <p class="dek center" style="margin:20px auto 32px;">Membership is not restricted by degree, age, or institution. It is restricted by standard of work.</p>
-    <button class="animated-button" type="button" onclick="window.location.href='join.html'" style="margin:0 auto;">
-      <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
-      </svg>
+    <a href="join.html" class="stamp-button" style="margin:0 auto;">
+      <span class="fill"></span>
       <span class="text">Begin an Application</span>
-      <span class="circle"></span>
-      <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
-        <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
-      </svg>
-    </button>
+      <span class="seal"></span>
+    </a>
   </div>
 </section>
 
@@ -201,7 +193,7 @@
   <div class="wrap">
     <div class="footer-top">
       <div>
-        <div class="footer-mark">ARISE</div>
+        <div class="footer-mark"><img class="mark-icon" src="img/aries-logo.png" alt="">ARIES</div>
         <p style="max-width:32ch;">Research, Innovation & Exploration Society — the research division of AMAZE Consortium.</p>
       </div>
       <div class="footer-col">
@@ -228,7 +220,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 ARISE — Research, Innovation & Exploration Society</span>
+      <span>© 2026 ARIES — Research, Innovation & Exploration Society</span>
       <span>Research division of AMAZE Consortium</span>
     </div>
   </div>

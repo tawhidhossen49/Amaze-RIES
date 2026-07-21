@@ -3,27 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Research — ARISE</title>
-<meta name="description" content="Browse the ARISE publication index — peer-reviewed research across natural sciences, culture & cognition, and systems & design.">
+<title>Research — ARIES</title>
+<meta name="description" content="Browse the ARIES publication index — peer-reviewed research across natural sciences, culture & cognition, and systems & design.">
 <link rel="canonical" href="https://riesresearch.org/research.html">
-<meta property="og:title" content="Research — ARISE">
-<meta property="og:description" content="Browse the ARISE publication index — peer-reviewed research across natural sciences, culture & cognition, and systems & design.">
+<meta property="og:title" content="Research — ARIES">
+<meta property="og:description" content="Browse the ARIES publication index — peer-reviewed research across natural sciences, culture & cognition, and systems & design.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://picsum.photos/id/1043/700/875">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#1F2E23">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
+<link rel="icon" type="image/png" sizes="256x256" href="img/favicon-256.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400;1,9..144,500&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body data-page="research">
+
+<div class="intro-curtain" id="introCurtain" aria-hidden="true">
+  <img class="intro-mark" src="img/aries-logo.png" alt="">
+</div>
+<script>if(sessionStorage.getItem('ariseIntroPlayed')){document.getElementById('introCurtain').style.display='none';}</script>
 
 <a href="#main" class="skip-link">Skip to content</a>
 
 <nav class="site-nav">
-  <a href="index.html" class="nav-mark">ARISE<span>AMAZE CONSORTIUM</span></a>
+  <a href="index.html" class="nav-mark">
+    <img class="mark-icon" src="img/aries-logo.png" alt="">
+    <span class="nav-mark-word">ARIES<span class="nav-mark-sub">AMAZE CONSORTIUM &middot; RESEARCH DIVISION</span></span>
+  </a>
   <div class="nav-links">
     <a href="about.html">About</a>
     <a href="research.html" class="active" aria-current="page">Research</a>
@@ -205,7 +214,7 @@
     <div class="split-7-5" style="margin-top:16px;">
       <div>
         <h2>Mapping tidal erosion along the Sundarbans coastline</h2>
-        <p class="caption" style="margin:16px 0 24px;">R. Chowdhury, Lead Field Researcher, ARISE Coastal Systems Group</p>
+        <p class="caption" style="margin:16px 0 24px;">R. Chowdhury, Lead Field Researcher, ARIES Coastal Systems Group</p>
         <p style="font-size:18px; max-width:60ch;">Over twenty-two months, four monitoring stations tracked sediment displacement across a twelve-kilometer stretch of mangrove coastline. Erosion accelerated non-linearly in zones adjacent to root systems damaged by upstream dredging, suggesting root density functions as a threshold variable rather than a linear buffer.</p>
         <hr class="hairline" style="margin:32px 0;">
         <p class="caption">Additional Authors: M. Islam · A. Osei · S. Rahman · T. Banerjee · K. Huda</p>
@@ -231,7 +240,7 @@
   <div class="wrap">
     <div class="footer-top">
       <div>
-        <div class="footer-mark">ARISE</div>
+        <div class="footer-mark"><img class="mark-icon" src="img/aries-logo.png" alt="">ARIES</div>
         <p style="max-width:32ch;">Research, Innovation & Exploration Society — the research division of AMAZE Consortium.</p>
       </div>
       <div class="footer-col">
@@ -258,7 +267,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 ARISE — Research, Innovation & Exploration Society</span>
+      <span>© 2026 ARIES — Research, Innovation & Exploration Society</span>
       <span>Research division of AMAZE Consortium</span>
     </div>
   </div>
