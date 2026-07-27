@@ -232,6 +232,25 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProgress();
   }
 
+  /* ---- scrollspy (one-page nav: highlight the section currently in view) ---- */
+  const navSectionLinks = document.querySelectorAll('.nav-links a[data-section], .mobile-menu a[href^="#"]');
+  const spySections = ['about','research','projects','insights','community','contact']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
+  if ('IntersectionObserver' in window && spySections.length){
+    const spyIo = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          const id = entry.target.id;
+          document.querySelectorAll('.nav-links a').forEach(a => {
+            a.classList.toggle('active', a.dataset.section === id);
+          });
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    spySections.forEach(s => spyIo.observe(s));
+  }
+
   /* ---- simple form intercepts (static demo) ---- */
   document.querySelectorAll('form[data-demo]').forEach(form => {
     form.addEventListener('submit', (e) => {
