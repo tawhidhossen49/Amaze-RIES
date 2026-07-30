@@ -247,9 +247,10 @@ h3.card-title{font-size:21px;}
   transform:translateX(-50%) translateY(-8px);
   transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease),visibility var(--dur);
 }
-.has-dropdown:hover .dropdown,.has-dropdown:focus-within .dropdown{
+.has-dropdown:hover .dropdown,.has-dropdown:focus-within .dropdown,.has-dropdown.is-open .dropdown{
   opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0);
 }
+.has-dropdown.is-open .chev{transform:rotate(180deg);}
 .dropdown a{display:block;text-decoration:none;position:relative;}
 .dropdown .dd-label{
   font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
@@ -270,7 +271,7 @@ h3.card-title{font-size:21px;}
 
 /* Mobile nav */
 .nav-mobile{
-  display:block;position:fixed;inset:var(--header-h) 0 0 0;background:var(--paper);
+  display:block;position:fixed;inset:var(--header-h-live, var(--header-h)) 0 0 0;background:var(--paper);
   z-index:190;overflow-y:auto;padding:var(--sp-6) 24px;
   transform:translateX(100%);transition:transform var(--dur-slow) var(--ease);
 }
@@ -503,8 +504,8 @@ h3.card-title{font-size:21px;}
 .bar-track{flex:1;background:var(--green-50);border-radius:20px;height:14px;overflow:hidden;}
 .bar-fill{background:linear-gradient(90deg,var(--green-700),var(--green));height:100%;border-radius:20px;
   transition:width 1.1s var(--ease-out);}
-.bar-row .bar-value{width:44px;flex:none;text-align:right;font-family:var(--font-mono);font-size:12.5px;color:var(--sage);
-  font-variant-numeric:tabular-nums;}
+.bar-row .bar-value{width:74px;flex:none;text-align:right;font-family:var(--font-mono);font-size:12.5px;color:var(--sage);
+  font-variant-numeric:tabular-nums;white-space:nowrap;}
 
 /* Quote / pull */
 .pull-quote{

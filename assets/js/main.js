@@ -12,10 +12,16 @@
      Header: condense + shadow once the page has scrolled
   --------------------------------------------------------- */
   var header = document.querySelector(".site-header");
+  function setHeaderHeightVar(){
+    if (header) document.documentElement.style.setProperty("--header-h-live", header.offsetHeight + "px");
+  }
   function onScroll(){
     if (header) header.classList.toggle("is-scrolled", window.scrollY > 8);
+    setHeaderHeightVar();
   }
   window.addEventListener("scroll", onScroll, {passive:true});
+  window.addEventListener("resize", setHeaderHeightVar);
+  setHeaderHeightVar();
   onScroll();
 
   /* Mobile nav toggle */
@@ -29,10 +35,33 @@
   }
   if (toggle && mobileNav) {
     toggle.addEventListener("click", function(){
+      setHeaderHeightVar();
       var isOpen = mobileNav.classList.toggle("is-open");
       toggle.classList.toggle("is-active", isOpen);
       toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
       document.body.style.overflow = isOpen ? "hidden" : "";
+    });
+  }
+
+  /* Dropdown nav: hover works with a mouse, but touch/coarse-pointer
+     devices at desktop widths have no hover — give first tap a chance
+     to open the panel instead of following the link immediately. */
+  var isCoarsePointer = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+  if (isCoarsePointer) {
+    document.querySelectorAll(".has-dropdown > .nav-link").forEach(function(link){
+      link.addEventListener("click", function(e){
+        var li = link.parentElement;
+        if (!li.classList.contains("is-open")) {
+          e.preventDefault();
+          document.querySelectorAll(".has-dropdown.is-open").forEach(function(o){ o.classList.remove("is-open"); });
+          li.classList.add("is-open");
+        }
+      });
+    });
+    document.addEventListener("click", function(e){
+      document.querySelectorAll(".has-dropdown.is-open").forEach(function(li){
+        if (!li.contains(e.target)) li.classList.remove("is-open");
+      });
     });
   }
 
@@ -66,24 +95,26 @@
   function primeCountUp(el){
     var node = el.firstChild;
     if (!node || node.nodeType !== 3) return null;
-    var m = node.textContent.match(/(\d[\d,]*)/);
+    var m = node.textContent.match(/(\d[\d,]*(?:\.\d+)?)/);
     if (!m) return null;
-    var target = parseInt(m[1].replace(/,/g, ""), 10);
+    var raw = m[1].replace(/,/g, "");
+    var target = parseFloat(raw);
     if (!isFinite(target)) return null;
+    var decimals = raw.indexOf(".") > -1 ? raw.split(".")[1].length : 0;
     var prefix = node.textContent.slice(0, m.index);
     var suffix = node.textContent.slice(m.index + m[1].length);
-    node.textContent = prefix + "0" + suffix;
-    return {node: node, prefix: prefix, suffix: suffix, target: target};
+    node.textContent = prefix + (0).toFixed(decimals) + suffix;
+    return {node: node, prefix: prefix, suffix: suffix, target: target, decimals: decimals};
   }
   function runCountUp(spec){
     if (!spec) return;
-    if (reduceMotion) { spec.node.textContent = spec.prefix + spec.target + spec.suffix; return; }
+    if (reduceMotion) { spec.node.textContent = spec.prefix + spec.target.toFixed(spec.decimals) + spec.suffix; return; }
     var start = null, dur = 1200;
     function tick(ts){
       if (start === null) start = ts;
       var p = Math.min(1, (ts - start) / dur);
       var eased = 1 - Math.pow(1 - p, 3);
-      var val = Math.round(spec.target * eased);
+      var val = (spec.target * eased).toFixed(spec.decimals);
       spec.node.textContent = spec.prefix + val + spec.suffix;
       if (p < 1) requestAnimationFrame(tick);
     }
@@ -172,7 +203,7 @@
           io.unobserve(entry.target);
         }
       });
-    }, {threshold: 0.14, rootMargin: "0px 0px -6% 0px"});
+    }, {threshold: [0, 0.14], rootMargin: "0px 0px -6% 0px"});
     revealTargets.forEach(function(el){ io.observe(el); });
   } else {
     revealTargets.forEach(handleReveal);
@@ -193,9 +224,15 @@
         group.querySelectorAll(".tab-panel").forEach(function(p){ p.classList.remove("is-active"); });
         var panel = document.getElementById(tab.getAttribute("aria-controls"));
         panel.classList.add("is-active");
-        panel.querySelectorAll(".reveal:not(.reveal-visible)").forEach(function(el){
-          if (io) io.unobserve(el);
-          handleReveal(el);
+        var pending = panel.querySelectorAll(".reveal:not(.reveal-visible)");
+        pending.forEach(function(el){ if (io) io.unobserve(el); });
+        /* force a layout flush so the browser registers the pre-reveal state
+           before we flip it — otherwise the transition gets coalesced away */
+        void panel.offsetHeight;
+        requestAnimationFrame(function(){
+          requestAnimationFrame(function(){
+            pending.forEach(handleReveal);
+          });
         });
       });
     });
