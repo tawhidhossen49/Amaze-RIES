@@ -56,11 +56,14 @@
   </nav>
 </header>
 <main id="main">
-<section class="page-hero section--paper">
+<section class="page-hero page-hero--cover">
+  <div class="hero-media">
+    <img src="assets/img/photo/hero-insights.jpg" srcset="assets/img/photo/hero-insights@sm.jpg 1100w, assets/img/photo/hero-insights.jpg 2000w" sizes="100vw" width="2000" height="1125" alt="" fetchpriority="high" decoding="async">
+  </div>
   <div class="container">
     <p class="breadcrumb"><a href="index.html">Home</a> / Insights</p>
     <p class="eyebrow">Insights</p>
-    <h1>Context, commentary, and data from our work</h1>
+    <h1 data-split data-split-delay="120">Context, commentary, and data from our work</h1>
     <p class="lede">Where Publications is the formal record, Insights is where ARIES
     explains its work in plain terms &mdash; editorial perspective alongside the
     figures behind it.</p>
@@ -69,21 +72,27 @@
 
 <section class="section section--paper">
   <div class="container">
-    <div class="card-row grid-halves">
-      <a class="card-link" href="insights-articles.html">
-        <div class="card">
-          <h3 class="card-title">Articles</h3>
+    <div class="card-grid card-grid--2" data-reveal-group="up">
+      <a class="media-card" href="insights-articles.html">
+        <div class="media-card-img">
+          <img src="assets/img/photo/card-09.jpg" srcset="assets/img/photo/card-09@sm.jpg 700w, assets/img/photo/card-09.jpg 1200w" sizes="(max-width:700px) 100vw, 50vw" width="1200" height="800" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="media-card-body">
+          <h3>Articles</h3>
           <p>Editorial, blog-style writing on our research, its context, and what it means
           &mdash; a more accessible companion to the formal publications.</p>
-          <span class="btn-arrow">Read articles &rarr;</span>
+          <span class="arrow-cta arrow-cta--sm"><span class="arrow-cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="arrow-cta-label">Read articles</span></span>
         </div>
       </a>
-      <a class="card-link" href="insights-statistics.html">
-        <div class="card">
-          <h3 class="card-title">Statistics</h3>
+      <a class="media-card" href="insights-statistics.html">
+        <div class="media-card-img">
+          <img src="assets/img/photo/card-08.jpg" srcset="assets/img/photo/card-08@sm.jpg 700w, assets/img/photo/card-08.jpg 1200w" sizes="(max-width:700px) 100vw, 50vw" width="1200" height="800" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="media-card-body">
+          <h3>Statistics</h3>
           <p>Figures and charts drawn from ARIES research, presented as data rather
           than narrative.</p>
-          <span class="btn-arrow">View statistics &rarr;</span>
+          <span class="arrow-cta arrow-cta--sm"><span class="arrow-cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="arrow-cta-label">View statistics</span></span>
         </div>
       </a>
     </div>

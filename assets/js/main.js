@@ -47,6 +47,9 @@
   }
   window.addEventListener("scroll", onScroll, {passive:true});
   window.addEventListener("resize", rafThrottle(setHeaderHeightVar));
+  /* The condensed header shrinks the mark, so its final height isn't
+     known until the logo has loaded. */
+  window.addEventListener("load", setHeaderHeightVar);
   setHeaderHeightVar();
   onScroll();
 
@@ -55,17 +58,44 @@
   --------------------------------------------------------- */
   var toggle = document.querySelector(".nav-toggle");
   var mobileNav = document.querySelector(".nav-mobile");
+  /* Locking the body with `overflow:hidden` alone lets iOS keep the
+     page scrolled underneath, so the drawer is pinned in place and
+     the offset is restored on close. */
+  var scrollLockY = 0;
+
+  function lockScroll(on){
+    var b = document.body;
+    if (on) {
+      scrollLockY = window.scrollY || window.pageYOffset || 0;
+      b.style.position = "fixed";
+      b.style.top = -scrollLockY + "px";
+      b.style.left = "0";
+      b.style.right = "0";
+      b.style.width = "100%";
+      b.style.overflow = "hidden";
+    } else {
+      b.style.position = "";
+      b.style.top = "";
+      b.style.left = "";
+      b.style.right = "";
+      b.style.width = "";
+      b.style.overflow = "";
+      window.scrollTo(0, scrollLockY);
+    }
+  }
 
   function setMobileNav(open){
     if (!mobileNav || !toggle) return;
-    setHeaderHeightVar();
+    if (open) setHeaderHeightVar();
     mobileNav.classList.toggle("is-open", open);
     toggle.classList.toggle("is-active", open);
     toggle.setAttribute("aria-expanded", open ? "true" : "false");
     toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    document.body.style.overflow = open ? "hidden" : "";
+    lockScroll(open);
   }
-  function closeMobileNav(){ setMobileNav(false); }
+  function closeMobileNav(){
+    if (mobileNav && mobileNav.classList.contains("is-open")) setMobileNav(false);
+  }
 
   if (toggle && mobileNav) {
     toggle.setAttribute("aria-controls", "mobile-nav");
@@ -75,8 +105,8 @@
     });
   }
 
-  /* A width change can strand the menu open behind a desktop layout */
-  /* Keep in step with the `max-width:1040px` nav breakpoint in main.css. */
+  /* A width change can strand the menu open behind a desktop layout.
+     Keep in step with the `max-width:1040px` nav breakpoint in main.css. */
   onMediaChange(
     window.matchMedia && window.matchMedia("(min-width: 1041px)"),
     function(e){ if (e.matches) closeMobileNav(); }
@@ -132,170 +162,106 @@
   });
 
   /* ---------------------------------------------------------
-     Hero field — the one deliberately bold moment.
-
-     A jittered grid of plotted marks whose weight follows a slow
-     travelling field. Marks sitting on a threshold band pick up
-     brass, so contour lines surface out of scattered points and
-     drift: grassroots data resolving into a pattern.
+     Scroll progress — a hairline under the header tracking
+     position through the document.
   --------------------------------------------------------- */
-  (function heroField(){
-    var canvas = document.querySelector(".hero-field");
-    if (!canvas || !canvas.getContext) return;
+  (function scrollProgress(){
+    if (!header) return;
+    var bar = document.createElement("div");
+    bar.className = "scroll-progress";
+    header.appendChild(bar);
 
-    var ctx = canvas.getContext("2d");
-    var marks = [];
-    /* scratch buffers for draw(), sized once in build() */
-    var hitIndex = null, hitBucket = null;
-    var w = 0, h = 0;
-    var SPACING = 14;
-
-    function build(){
-      var rect = canvas.getBoundingClientRect();
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
-      w = rect.width; h = rect.height;
-      if (!w || !h) return false;
-
-      canvas.width = Math.round(w * dpr);
-      canvas.height = Math.round(h * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      marks.length = 0;
-      var cols = Math.ceil(w / SPACING) + 1;
-      var rows = Math.ceil(h / SPACING) + 1;
-      for (var i = 0; i < cols; i++) {
-        for (var j = 0; j < rows; j++) {
-          /* deterministic jitter keeps the field stable across resizes */
-          var n = Math.sin(i * 12.9898 + j * 78.233) * 43758.5453;
-          var r1 = n - Math.floor(n);
-          var n2 = Math.sin(i * 39.3468 + j * 11.135) * 24634.6345;
-          var r2 = n2 - Math.floor(n2);
-          marks.push({
-            x: i * SPACING + (r1 - 0.5) * SPACING * 0.7,
-            y: j * SPACING + (r2 - 0.5) * SPACING * 0.7
-          });
-        }
-      }
-      hitIndex = new Uint32Array(marks.length);
-      hitBucket = new Uint8Array(marks.length);
-      return true;
+    var max = 0;
+    function measure(){
+      max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
     }
-
-    /* Elevation surface: a few travelling waves at long wavelengths,
-       so the terrain is smooth and its contours are broad ribbons
-       rather than noise. */
-    function fieldAt(x, y, t){
-      return Math.sin(x * 0.0058 + t)
-           + Math.sin(y * 0.0086 - t * 0.72)
-           + Math.sin((x + y) * 0.0041 + t * 0.51)
-           + Math.sin((x - y * 1.6) * 0.0033 - t * 0.36);
-    }
-
-    /* Contours are drawn at evenly spaced elevations across the whole
-       surface. Measuring distance to the nearest interval boundary —
-       rather than to a handful of fixed values — is what makes the
-       ribbons read as contour lines instead of scattered dust. */
-    var INTERVAL = 0.62; /* elevation between successive contours */
-    var BAND = 0.18;     /* how close a mark must sit to count as "on" */
-
-    /* Thousands of marks are redrawn 30 times a second, so brightness is
-       quantised into a fixed set of steps and their colours built once.
-       Otherwise every mark would allocate a new rgba string and force the
-       canvas to re-parse a colour on each frame. */
-    var STEPS = 14;
-    var CONTOUR_FILL = [];
-    var CONTOUR_SIZE = [];
-    for (var q = 0; q < STEPS; q++) {
-      var f = q / (STEPS - 1);
-      CONTOUR_FILL.push("rgba(219,197,144," + (0.13 + f * 0.74).toFixed(3) + ")");
-      CONTOUR_SIZE.push(1.5 + f * 2.1);
-    }
-    var OFF_FILL = "rgba(178,203,184,0.055)";
-
-    function draw(t){
-      ctx.clearRect(0, 0, w, h);
-
-      /* Off-contour marks all share one colour, so they go down in a single
-         pass; contour marks are deferred into a reused buffer and drawn
-         after, keeping fillStyle changes to roughly one per bucket. */
-      ctx.fillStyle = OFF_FILL;
-      var n = 0;
-      for (var i = 0; i < marks.length; i++) {
-        var m = marks[i];
-        var step = fieldAt(m.x, m.y, t) / INTERVAL;
-        var d = Math.abs(step - Math.round(step)); /* 0 → dead on a contour */
-        if (d < BAND) {
-          hitIndex[n] = i;
-          hitBucket[n] = ((1 - d / BAND) * (STEPS - 1)) | 0;
-          n++;
-        } else {
-          ctx.fillRect(m.x, m.y, 1.1, 1.1);
-        }
-      }
-
-      for (var j = 0; j < n; j++) {
-        var mk = marks[hitIndex[j]], q2 = hitBucket[j];
-        ctx.fillStyle = CONTOUR_FILL[q2];
-        var s = CONTOUR_SIZE[q2];
-        ctx.fillRect(mk.x, mk.y, s, s);
-      }
-    }
-
-    var raf = null, last = 0, clock = 0, running = false, isOnScreen = true;
-    var FRAME = 1000 / 30; /* 30fps is plenty for a drift this slow */
-
-    function loop(now){
-      raf = requestAnimationFrame(loop);
-      if (now - last < FRAME) return;
-      clock += (now - last) / 1000 * 0.12;
-      last = now;
-      draw(clock);
-    }
-    function start(){
-      if (running || reduceMotion) return;
-      running = true; last = performance.now();
-      raf = requestAnimationFrame(loop);
-    }
-    function stop(){
-      running = false;
-      if (raf) { cancelAnimationFrame(raf); raf = null; }
-    }
-
-    function init(){
-      if (!build()) return;
-      draw(clock);
-      if (!reduceMotion) start();
-    }
-
-    var resizeTimer;
-    window.addEventListener("resize", function(){
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function(){ if (build()) draw(clock); }, 180);
+    var update = rafThrottle(function(){
+      var p = Math.min(1, Math.max(0, window.scrollY / max));
+      bar.style.transform = "scaleX(" + p.toFixed(4) + ")";
     });
-
-    /* Don't burn frames on a hero that has scrolled away, or a
-       backgrounded tab. */
-    document.addEventListener("visibilitychange", function(){
-      if (document.hidden) stop(); else if (isOnScreen) start();
-    });
-
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function(entries){
-        isOnScreen = entries[0].isIntersecting;
-        if (isOnScreen && !document.hidden) start(); else stop();
-      }, {threshold: 0}).observe(canvas);
-    }
-
-    onMediaChange(motionQuery, function(e){
-      reduceMotion = e.matches;
-      if (reduceMotion) { stop(); draw(clock); } else start();
-    });
-
-    init();
+    measure();
+    update();
+    window.addEventListener("scroll", update, {passive:true});
+    window.addEventListener("resize", rafThrottle(function(){ measure(); update(); }));
+    window.addEventListener("load", function(){ measure(); update(); });
   })();
 
   /* ---------------------------------------------------------
-     Count-up for statistics. Preserves any prefix/suffix such
+     Headline word stagger.
+
+     Each word is wrapped in a mask so it can rise into place.
+     Only applied to headings that opt in with `data-split`, and
+     only to plain text nodes — any inline markup inside the
+     heading is left exactly as authored.
+  --------------------------------------------------------- */
+  (function splitHeadings(){
+    if (reduceMotion) return;
+    var WORD_MS = 55;
+    document.querySelectorAll("[data-split]").forEach(function(el){
+      var delay = parseFloat(el.getAttribute("data-split-delay")) || 0;
+      var i = 0;
+      var nodes = Array.prototype.slice.call(el.childNodes);
+
+      nodes.forEach(function(node){
+        if (node.nodeType !== 3) return;              /* leave <br>, <em>, … alone */
+        if (!node.textContent.trim()) return;
+        var frag = document.createDocumentFragment();
+        /* keep the whitespace runs so words don't collide when the
+           spans are laid back out inline */
+        node.textContent.split(/(\s+)/).forEach(function(chunk){
+          if (!chunk) return;
+          if (!chunk.trim()) { frag.appendChild(document.createTextNode(chunk)); return; }
+          var outer = document.createElement("span");
+          outer.className = "split-word";
+          var inner = document.createElement("i");
+          inner.textContent = chunk;
+          inner.style.animationDelay = (delay + i * WORD_MS) + "ms";
+          i++;
+          outer.appendChild(inner);
+          frag.appendChild(outer);
+        });
+        el.replaceChild(frag, node);
+      });
+
+      if (i) el.classList.add("is-split");
+    });
+  })();
+
+  /* ---------------------------------------------------------
+     Hero parallax — the backing photograph drifts slower than
+     the page. Skipped on narrow screens, where the moving
+     mobile URL bar makes the offset jitter rather than glide.
+  --------------------------------------------------------- */
+  (function heroParallax(){
+    var media = document.querySelector(".hero-media img, .full-bleed-media img");
+    if (!media || reduceMotion) return;
+    if (!window.matchMedia || !window.matchMedia("(min-width: 901px)").matches) return;
+
+    var targets = Array.prototype.slice.call(
+      document.querySelectorAll(".hero-media img, .full-bleed-media img")
+    );
+    /* Overscale so the drift never exposes an edge */
+    targets.forEach(function(img){ img.style.willChange = "transform"; });
+
+    var DRIFT = 0.14;
+    var update = rafThrottle(function(){
+      targets.forEach(function(img){
+        var host = img.closest(".hero, .full-bleed");
+        if (!host) return;
+        var r = host.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) return;
+        var shift = (r.top * -DRIFT).toFixed(2);
+        img.style.transform = "translate3d(0," + shift + "px,0) scale(1.14)";
+      });
+    });
+    targets.forEach(function(img){ img.style.transform = "scale(1.14)"; });
+    update();
+    window.addEventListener("scroll", update, {passive:true});
+    window.addEventListener("resize", update);
+  })();
+
+  /* ---------------------------------------------------------
+     Count-up for figures. Preserves any prefix/suffix such
      as "%" and leaves trailing markup untouched.
   --------------------------------------------------------- */
   function primeCountUp(el){
@@ -321,7 +287,7 @@
       spec.node.textContent = spec.prefix + spec.target.toFixed(spec.decimals) + spec.suffix;
       return;
     }
-    var start = null, dur = 1100;
+    var start = null, dur = 1200;
     function tick(ts){
       if (start === null) start = ts;
       var p = Math.min(1, (ts - start) / dur);
@@ -331,6 +297,20 @@
     }
     requestAnimationFrame(tick);
   }
+  var COUNT_SELECTOR = ".stat-num, .sb-num, .hs-num";
+  function countWithin(el){
+    var nums = el.matches(COUNT_SELECTOR) ? [el] : el.querySelectorAll(COUNT_SELECTOR);
+    Array.prototype.forEach.call(nums, function(num){
+      if (num.dataset.counted) return;
+      num.dataset.counted = "1";
+      runCountUp(primeCountUp(num));
+    });
+  }
+  /* The hero is above the fold and never enters the observer, so its
+     figures are counted on load instead. */
+  document.querySelectorAll(".hero .hero-stats").forEach(function(el){
+    setTimeout(function(){ countWithin(el); }, 600);
+  });
 
   /* ---------------------------------------------------------
      Bar charts: capture the authored width, collapse, then grow
@@ -349,71 +329,64 @@
   }
 
   /* ---------------------------------------------------------
-     Scroll reveal. Grouped by shared parent so grids cascade.
+     Scroll reveal.
+
+     Markup opts in with `data-reveal="up|fade|left|right|scale"`.
+     A `data-reveal-group` on a parent stamps the attribute onto
+     its children and staggers them, so a grid cascades without
+     every cell having to declare a delay by hand.
   --------------------------------------------------------- */
-  var itemSelector = [
-    ".card", ".pub-entry", ".project-card", ".article-card", ".stat-card",
-    ".chart-block", ".people-card", ".event-card", ".value-item",
-    ".step-item", ".criteria-item", ".contact-item"
-  ].join(",");
-  var soloSelector = ".section-head, .pull-quote, .placeholder-block, .prose";
-  var textSelector = ".section-title, .eyebrow, .lede";
+  var STAGGER_MS = 90;
+  var STAGGER_CAP = 6; /* past this the last cell waits too long to feel related */
 
-  var revealTargets = [];
-  function markReveal(el, delayMs){
-    if (!el || el.classList.contains("reveal")) return;
-    el.classList.add("reveal");
-    if (delayMs) el.style.transitionDelay = delayMs + "ms";
-    revealTargets.push(el);
-  }
-
-  /* 1 — item groups, staggered within their shared parent */
-  var parents = new Map();
-  document.querySelectorAll(itemSelector).forEach(function(el){
-    var p = el.parentElement;
-    if (!parents.has(p)) parents.set(p, 0);
-    var i = parents.get(p);
-    parents.set(p, i + 1);
-    markReveal(el, Math.min(i, 5) * 65);
-  });
-
-  /* 2 — section intros and pull quotes */
-  document.querySelectorAll(soloSelector).forEach(function(el){ markReveal(el, 0); });
-
-  /* 3 — loose headings not already inside a hero or section-head */
-  document.querySelectorAll(textSelector).forEach(function(el){
-    if (el.closest(".hero") || el.closest(".page-hero") || el.closest(".section-head")) return;
-    if (el.closest(itemSelector)) return;
-    var step = el.classList.contains("eyebrow") ? 0 : el.classList.contains("section-title") ? 1 : 2;
-    markReveal(el, step * 75);
-  });
-
-  /* 4 — a section with none of the above lifts as one block */
-  document.querySelectorAll("section.section > .container").forEach(function(container){
-    if (container.querySelector(itemSelector + "," + soloSelector + "," + textSelector)) return;
-    markReveal(container, 0);
+  document.querySelectorAll("[data-reveal-group]").forEach(function(group){
+    var kind = group.getAttribute("data-reveal-group") || "up";
+    var kids = group.children;
+    for (var i = 0; i < kids.length; i++) {
+      var kid = kids[i];
+      if (kid.hasAttribute("data-reveal")) continue;
+      kid.setAttribute("data-reveal", kind);
+      kid.style.transitionDelay = (Math.min(i, STAGGER_CAP) * STAGGER_MS) + "ms";
+    }
   });
 
   function handleReveal(el){
-    el.classList.add("reveal-visible");
-    if (el.classList.contains("stat-card")) {
-      var num = el.querySelector(".stat-num");
-      if (num && !num.dataset.counted) { num.dataset.counted = "1"; runCountUp(primeCountUp(num)); }
-    }
-    if (el.classList.contains("chart-block")) runBars(el);
+    el.classList.add("is-revealed");
+    el.classList.add("reveal-visible"); /* legacy hook */
+    countWithin(el);
+    if (el.classList.contains("chart-block") || el.querySelector(".bar-fill")) runBars(el);
   }
+
+  var revealTargets = Array.prototype.slice.call(
+    document.querySelectorAll("[data-reveal], .reveal")
+  );
 
   var io = null;
   if ("IntersectionObserver" in window) {
     io = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
-        if (entry.isIntersecting) { handleReveal(entry.target); io.unobserve(entry.target); }
+        if (!entry.isIntersecting) return;
+        handleReveal(entry.target);
+        io.unobserve(entry.target);
       });
-    }, {threshold:[0, 0.12], rootMargin:"0px 0px -6% 0px"});
+    }, {threshold:0, rootMargin:"0px 0px -8% 0px"});
     revealTargets.forEach(function(el){ io.observe(el); });
   } else {
     revealTargets.forEach(handleReveal);
   }
+
+  /* An element that is already on screen at load — or one that was
+     never observed because the page is short — must not sit invisible. */
+  window.addEventListener("load", function(){
+    revealTargets.forEach(function(el){
+      if (el.classList.contains("is-revealed")) return;
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) {
+        if (io) io.unobserve(el);
+        handleReveal(el);
+      }
+    });
+  });
 
   /* ---------------------------------------------------------
      Tabs — full ARIA tablist behaviour, arrow keys included.
@@ -436,7 +409,7 @@
       if (!panel) return;
       /* Switching panels is a deliberate action — reveal its contents
          now rather than waiting on a scroll that may never come. */
-      var pending = panel.querySelectorAll(".reveal:not(.reveal-visible)");
+      var pending = panel.querySelectorAll("[data-reveal]:not(.is-revealed), .reveal:not(.reveal-visible)");
       if (!pending.length) return;
       pending.forEach(function(el){ if (io) io.unobserve(el); });
       void panel.offsetHeight; /* flush layout so the transition isn't coalesced away */
@@ -511,4 +484,6 @@
       }
     });
   });
+
+  onMediaChange(motionQuery, function(e){ reduceMotion = e.matches; });
 })();

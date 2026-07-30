@@ -56,11 +56,14 @@
   </nav>
 </header>
 <main id="main">
-<section class="page-hero section--paper">
+<section class="page-hero page-hero--cover">
+  <div class="hero-media">
+    <img src="assets/img/photo/hero-about.jpg" srcset="assets/img/photo/hero-about@sm.jpg 1100w, assets/img/photo/hero-about.jpg 2000w" sizes="100vw" width="2000" height="1125" alt="" fetchpriority="high" decoding="async">
+  </div>
   <div class="container">
     <p class="breadcrumb"><a href="index.html">Home</a> / About</p>
     <p class="eyebrow">About ARIES</p>
-    <h1>A research hub built on evidence, not assumption</h1>
+    <h1 data-split data-split-delay="120">A research hub built on evidence, not assumption</h1>
     <p class="lede">ARIES is the research hub of Amaze Consortium, dedicated to conducting
     structured grassroots research across Bangladesh and beyond, focused on understanding
     real-world data across multiple fields and domains.</p>
@@ -68,8 +71,8 @@
 </section>
 
 <section class="section section--paper">
-  <div class="container">
-    <div class="prose">
+  <div class="container grid-split">
+    <div class="prose" data-reveal="up">
     <p>
     It aims to move beyond assumptions and surface-level interpretations by gathering
     direct insights from individuals, communities, and institutions. Through systematic
@@ -89,15 +92,26 @@
     scores among students becomes the brief for a concrete Amaze initiative, like a
     workshop or essay competition, rather than a statistic that sits on a shelf.</p>
     </div>
+
+    <div data-reveal="right">
+      <figure class="figure figure--portrait" data-reveal="mask">
+        <img src="assets/img/photo/quote-portrait.jpg" srcset="assets/img/photo/quote-portrait@sm.jpg 560w, assets/img/photo/quote-portrait.jpg 900w" sizes="(max-width:900px) 100vw, 38vw" width="900" height="1125" alt="" loading="lazy" decoding="async">
+      </figure>
+      <div class="badge-row" style="margin-top:var(--sp-6);">
+        <span class="badge">Insight to action</span>
+        <span class="badge badge--brass">Pilot first</span>
+        <span class="badge badge--outline">Merit-based</span>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="section section--dark">
   <div class="container">
-    <p class="eyebrow">What we stand for</p>
-    <h2 class="section-title">
+    <p class="eyebrow" data-reveal="up">What we stand for</p>
+    <h2 class="section-title" data-reveal="up">
     Principles shared across Amaze Consortium, and carried into every ARIES study</h2>
-    <div class="value-list" style="margin-top:40px;">
+    <div class="value-list" data-reveal-group="up" style="margin-top:40px;">
       <div class="value-item"><p class="v-idx">01</p><div><h3>Community &amp; social impact</h3>
         <p>Contributing meaningfully to society through responsible initiatives and collaboration.</p></div></div>
       <div class="value-item"><p class="v-idx">02</p><div><h3>Growth through learning &amp; execution</h3>
@@ -120,16 +134,16 @@
 
 <section class="section section--paper">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head" data-reveal="up">
       <div>
-        <p class="eyebrow">Leadership</p>
-        <h2 class="section-title">Our research team</h2>
+        <p class="eyebrow" data-reveal="up">Leadership</p>
+        <h2 class="section-title" data-reveal="up">Our research team</h2>
       </div>
       <p class="lede">The proposal defines these roles for the Amaze Researcher Team &mdash;
       still being staffed, so names below are placeholders <span class="placeholder">placeholder</span>
       until real people are confirmed.</p>
     </div>
-    <div class="people-grid">
+    <div class="people-grid" data-reveal-group="up">
       <div class="people-card"><div class="people-avatar" aria-hidden="true"><span>RA</span></div><p class="p-name">Name pending <span class="placeholder">placeholder</span></p><p class="p-role">Research Advisor</p></div>
       <div class="people-card"><div class="people-avatar" aria-hidden="true"><span>RH</span></div><p class="p-name">Name pending <span class="placeholder">placeholder</span></p><p class="p-role">Research Head</p></div>
       <div class="people-card"><div class="people-avatar" aria-hidden="true"><span>MT</span></div><p class="p-name">Name pending <span class="placeholder">placeholder</span></p><p class="p-role">Methodologist</p></div>

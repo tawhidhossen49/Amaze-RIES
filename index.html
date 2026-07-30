@@ -56,36 +56,104 @@
   </nav>
 </header>
 <main id="main">
-<section class="hero">
-  <canvas class="hero-field" aria-hidden="true"></canvas>
+
+<!-- Hero. Photography is generic stock rather than ARIES fieldwork,
+     so the images stay decorative (alt="") — see assets/img/photo/. -->
+<section class="hero hero--split">
+  <div class="hero-media">
+    <img src="assets/img/photo/hero-home.jpg" srcset="assets/img/photo/hero-home@sm.jpg 1100w, assets/img/photo/hero-home.jpg 2000w" sizes="100vw" width="2000" height="1125" alt="" fetchpriority="high" decoding="async">
+  </div>
   <div class="container">
-    <p class="eyebrow">Amaze Research, Innovation &amp; Exploration Society</p>
-    <h1>Grassroots data, gathered rigorously.<br>Turned into real-world action.</h1>
-    <p class="lede">ARIES is the research hub of Amaze Consortium, dedicated to structured
-    grassroots research across Bangladesh and beyond &mdash; moving past assumption and
-    surface-level interpretation to gather direct insight from individuals, communities,
-    and institutions.</p>
-    <div class="actions">
-      <a class="btn btn-primary" href="research.html">View our research</a>
-      <a class="btn btn-secondary" href="research-methodology.html">How we work</a>
+    <div class="hero-grid">
+      <div class="hero-inner">
+        <p class="eyebrow">Amaze Research, Innovation &amp; Exploration Society</p>
+        <h1 data-split data-split-delay="140">Grassroots data, gathered rigorously</h1>
+        <p class="lede">ARIES is the research hub of Amaze Consortium, dedicated to structured
+        grassroots research across Bangladesh and beyond &mdash; moving past assumption and
+        surface-level interpretation to gather direct insight from individuals, communities,
+        and institutions.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="research.html">View our research</a>
+          <a class="arrow-cta" href="research-methodology.html">
+            <span class="arrow-cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            <span class="arrow-cta-label">See how we work</span>
+          </a>
+        </div>
+      </div>
+
+      <a class="hero-feature" href="research.html">
+        <div class="hff-img">
+          <img src="assets/img/photo/hero-feature.jpg" srcset="assets/img/photo/hero-feature@sm.jpg 700w, assets/img/photo/hero-feature.jpg 1200w" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" width="1200" height="800" alt="" decoding="async">
+        </div>
+        <div class="hff-body">
+          <span class="badge badge--brass">In development</span>
+          <p class="hff-title">The education pilot study</p>
+          <p class="hff-dek">One central question, asked through three lenses &mdash; then
+          carried from pilot into full-scale fieldwork.</p>
+          <span class="arrow-cta arrow-cta--sm">
+            <span class="arrow-cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            <span class="arrow-cta-label">Read the study</span>
+          </span>
+        </div>
+      </a>
     </div>
-    <div class="hero-rule"></div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <p class="hs-num">8</p>
+        <p class="hs-label">Objectives guiding the study</p>
+      </div>
+      <div class="hero-stat">
+        <p class="hs-num">7</p>
+        <p class="hs-label">Collection methods mapped</p>
+      </div>
+      <div class="hero-stat">
+        <p class="hs-num">2</p>
+        <p class="hs-label">Phases &mdash; pilot, then full scale</p>
+      </div>
+      <div class="hero-stat">
+        <p class="hs-num">3</p>
+        <p class="hs-label">Lenses on one central question</p>
+      </div>
+    </div>
   </div>
 </section>
 
+<!-- Mandate quote -->
 <section class="section section--paper">
   <div class="container">
-    <blockquote class="pull-quote">
-      Its goal is not only to study problems but to transform findings into meaningful,
-      evidence-based initiatives that can be implemented within and beyond the Consortium.
-      <cite>From the ARIES mandate</cite>
-    </blockquote>
+    <div class="grid-split">
+      <blockquote class="quote-block quote-block--wide" data-reveal="up">
+        <p class="q-text">Its goal is not only to study problems but to transform findings
+        into meaningful, evidence-based initiatives that can be implemented within and
+        beyond the Consortium.</p>
+        <cite>From the ARIES mandate</cite>
+      </blockquote>
+      <div data-reveal="right">
+        <figure class="figure figure--portrait" data-reveal="mask">
+          <img src="assets/img/photo/quote-portrait.jpg" srcset="assets/img/photo/quote-portrait@sm.jpg 560w, assets/img/photo/quote-portrait.jpg 900w" sizes="(max-width:900px) 100vw, 34vw" width="900" height="1125" alt="" loading="lazy" decoding="async">
+        </figure>
+        <div class="badge-row" style="margin-top:var(--sp-6);">
+          <span class="badge">Evidence first</span>
+          <span class="badge badge--brass">Field-led</span>
+          <span class="badge badge--outline">Bangladesh &amp; beyond</span>
+        </div>
+        <p class="section-lede">We exist to close the distance between what is assumed about
+        communities and what those communities actually report. Every finding we publish is
+        traceable to a method, a sample, and a date.</p>
+        <a class="arrow-cta arrow-cta--sm" href="about.html" style="margin-top:var(--sp-5);">
+          <span class="arrow-cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <span class="arrow-cta-label">About ARIES</span>
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="section section--paper">
+<!-- Focus areas -->
+<section class="section section--tint">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head" data-reveal="up">
       <div>
         <p class="eyebrow">Focus areas</p>
         <h2 class="section-title">Where our research is currently directed</h2>
@@ -93,101 +161,173 @@
       <p class="lede">The pilot study now in development asks one central question through
       three lenses: what students and teachers actually think education is for.</p>
     </div>
-    <div class="card-row grid-3">
-      <div class="card">
-        <h3 class="card-title">Perceptions of education</h3>
-        <p>How students and teachers describe the purpose of learning in their own words,
-        rather than the assumptions outside commentary tends to make for them.</p>
-        <a class="btn-arrow" href="research.html">Read the approach &rarr;</a>
-      </div>
-      <div class="card">
-        <h3 class="card-title">Innovation &amp; critical thinking</h3>
-        <p>Where independent thought and creativity are growing, and where exam-focused,
-        memorisation-heavy habits are still crowding them out.</p>
-        <a class="btn-arrow" href="research.html">Read the approach &rarr;</a>
-      </div>
-      <div class="card">
-        <h3 class="card-title">Job-oriented mindset</h3>
-        <p>Whether students see education mainly as a route to employment, or as a
-        tool for broader, holistic personal development &mdash; and what shapes that view.</p>
-        <a class="btn-arrow" href="research.html">Read the approach &rarr;</a>
-      </div>
+
+    <div class="card-grid" data-reveal-group="up">
+      <a class="media-card" href="research.html">
+        <div class="media-card-img">
+          <img src="assets/img/photo/card-01.jpg" srcset="assets/img/photo/card-01@sm.jpg 700w, assets/img/photo/card-01.jpg 1200w" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" width="1200" height="800" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="media-card-body">
+          <p class="eyebrow">Lens 01</p>
+          <h3>Perceptions of education</h3>
+          <p>How students and teachers describe the purpose of learning in their own words,
+          rather than the assumptions outside commentary tends to make for them.</p>
+          <span class="arrow-cta arrow-cta--sm">
+            <span class="arrow-cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            <span class="arrow-cta-label">Read the approach</span>
+          </span>
+        </div>
+      </a>
+
+      <a class="media-card" href="research.html">
+        <div class="media-card-img">
+          <img src="assets/img/photo/card-02.jpg" srcset="assets/img/photo/card-02@sm.jpg 700w, assets/img/photo/card-02.jpg 1200w" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" width="1200" height="800" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="media-card-body">
+          <p class="eyebrow">Lens 02</p>
+          <h3>Innovation &amp; critical thinking</h3>
+          <p>Where independent thought and creativity are growing, and where exam-focused,
+          memorisation-heavy habits are still crowding them out.</p>
+          <span class="arrow-cta arrow-cta--sm">
+            <span class="arrow-cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            <span class="arrow-cta-label">Read the approach</span>
+          </span>
+        </div>
+      </a>
+
+      <a class="media-card" href="research.html">
+        <div class="media-card-img">
+          <img src="assets/img/photo/card-03.jpg" srcset="assets/img/photo/card-03@sm.jpg 700w, assets/img/photo/card-03.jpg 1200w" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" width="1200" height="800" alt="" loading="lazy" decoding="async">
+        </div>
+        <div class="media-card-body">
+          <p class="eyebrow">Lens 03</p>
+          <h3>Job-oriented mindset</h3>
+          <p>Whether students see education mainly as a route to employment, or as a tool
+          for broader, holistic personal development &mdash; and what shapes that view.</p>
+          <span class="arrow-cta arrow-cta--sm">
+            <span class="arrow-cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            <span class="arrow-cta-label">Read the approach</span>
+          </span>
+        </div>
+      </a>
     </div>
   </div>
 </section>
 
-<section class="section section--tint">
-  <div class="container grid-2">
-    <div>
-      <p class="eyebrow">Approach</p>
-      <h2 class="section-title">Qualitative and quantitative, combined</h2>
-      <p class="section-lede">
-      By combining both qualitative and quantitative approaches, ARIES ensures that insights
-      reflect real conditions rather than theoretical assumptions &mdash; building, over time,
-      a sustainable research culture of continuous inquiry, critical thinking, and
-      data-driven decision-making.</p>
-      <a class="btn-arrow" style="margin-top:20px;display:inline-flex;" href="research-methodology.html">See our full methodology &rarr;</a>
-    </div>
-    <div class="stat-grid" style="margin-bottom:0;">
-      <div class="stat-card"><p class="stat-num">2</p><p class="stat-label">Research phases &mdash; pilot, then full scale</p></div>
-      <div class="stat-card"><p class="stat-num">8</p><p class="stat-label">Objectives guiding the study</p></div>
-      <div class="stat-card"><p class="stat-num">2</p><p class="stat-label">Data types tracked &mdash; research &amp; engagement</p></div>
-      <div class="stat-card"><p class="stat-num">7</p><p class="stat-label">Collection methods mapped for the field</p></div>
-    </div>
-  </div>
-</section>
-
+<!-- Approach + figures -->
 <section class="section section--paper">
   <div class="container">
-    <div class="section-head">
+    <div class="grid-split">
+      <div data-reveal="up">
+        <p class="eyebrow">Approach</p>
+        <h2 class="section-title">Qualitative and quantitative, combined</h2>
+        <p class="section-lede">By combining both qualitative and quantitative approaches,
+        ARIES ensures that insights reflect real conditions rather than theoretical
+        assumptions &mdash; building, over time, a sustainable research culture of continuous
+        inquiry, critical thinking, and data-driven decision-making.</p>
+        <a class="arrow-cta" href="research-methodology.html" style="margin-top:var(--sp-6);">
+          <span class="arrow-cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <span class="arrow-cta-label">See our full methodology</span>
+        </a>
+      </div>
+
+      <div class="stat-badges" style="grid-template-columns:1fr 1fr;" data-reveal-group="scale">
+        <div class="stat-badge">
+          <span class="badge">Phases</span>
+          <p class="sb-num">2</p>
+          <p class="sb-label">Pilot first, then full scale</p>
+        </div>
+        <div class="stat-badge">
+          <span class="badge">Objectives</span>
+          <p class="sb-num">8</p>
+          <p class="sb-label">Guiding the study end to end</p>
+        </div>
+        <div class="stat-badge">
+          <span class="badge">Data types</span>
+          <p class="sb-num">2</p>
+          <p class="sb-label">Research and engagement, tracked apart</p>
+        </div>
+        <div class="stat-badge">
+          <span class="badge">Methods</span>
+          <p class="sb-num">7</p>
+          <p class="sb-label">Collection methods mapped for the field</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Research gaps -->
+<section class="section section--tint">
+  <div class="container">
+    <div class="section-head" data-reveal="up">
       <div>
         <p class="eyebrow">Why this pilot exists</p>
         <h2 class="section-title">Gaps the existing literature hasn&rsquo;t closed</h2>
       </div>
-      <a class="btn-arrow" href="research-publications.html">See the full literature review &rarr;</a>
+      <a class="arrow-cta arrow-cta--sm" href="research-publications.html">
+        <span class="arrow-cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <span class="arrow-cta-label">See the full literature review</span>
+      </a>
     </div>
-    <div class="pub-list">
-      <div class="pub-entry">
-        <p class="pub-date">Gap 01</p>
+
+    <div class="editorial-list" data-reveal-group="up">
+      <a class="editorial-row editorial-row--numbered" href="research-publications.html">
+        <span class="badge-num" aria-hidden="true">01</span>
         <div>
+          <p class="ed-index">Research gap</p>
           <h3>How teachers are actually managing curriculum reform</h3>
-          <p class="pub-meta">Amaze Consortium literature review &mdash; policy &amp; classroom research</p>
-          <p class="pub-abstract">Bangladesh has mandated a shift to skill-based, competency-driven
+          <p class="ed-dek">Bangladesh has mandated a shift to skill-based, competency-driven
           assessment, but there is little ground-level data on how teachers used to large
           classes and rote methods are actually handling that transition.</p>
+          <p class="ed-meta"><span>Amaze Consortium literature review</span><span>Policy &amp; classroom research</span></p>
         </div>
-        <span class="pub-tag">Research gap</span>
-      </div>
-      <div class="pub-entry">
-        <p class="pub-date">Gap 02</p>
+        <div class="ed-media">
+          <img src="assets/img/photo/card-04.jpg" srcset="assets/img/photo/card-04@sm.jpg 700w, assets/img/photo/card-04.jpg 1200w" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" width="1200" height="800" alt="" loading="lazy" decoding="async">
+        </div>
+      </a>
+
+      <a class="editorial-row editorial-row--numbered" href="research-publications.html">
+        <span class="badge-num" aria-hidden="true">02</span>
         <div>
+          <p class="ed-index">Research gap</p>
           <h3>Whether AI and digital tools are narrowing or widening the gap</h3>
-          <p class="pub-meta">Amaze Consortium literature review &mdash; digital equity</p>
-          <p class="pub-abstract">Generative AI and high-tier digital learning tools are spreading fast,
-          but there is little evidence yet on whether they will democratise learning or further
-          isolate students without reliable device access.</p>
+          <p class="ed-dek">Generative AI and high-tier digital learning tools are spreading
+          fast, but there is little evidence yet on whether they will democratise learning or
+          further isolate students without reliable device access.</p>
+          <p class="ed-meta"><span>Amaze Consortium literature review</span><span>Digital equity</span></p>
         </div>
-        <span class="pub-tag">Research gap</span>
+        <div class="ed-media">
+          <img src="assets/img/photo/card-05.jpg" srcset="assets/img/photo/card-05@sm.jpg 700w, assets/img/photo/card-05.jpg 1200w" sizes="(max-width:640px) 100vw, (max-width:900px) 50vw, 33vw" width="1200" height="800" alt="" loading="lazy" decoding="async">
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Join -->
+<section class="full-bleed">
+  <div class="full-bleed-media">
+    <img src="assets/img/photo/hero-join.jpg" srcset="assets/img/photo/hero-join@sm.jpg 1100w, assets/img/photo/hero-join.jpg 2000w" sizes="100vw" width="2000" height="1125" alt="" loading="lazy" decoding="async">
+  </div>
+  <div class="container">
+    <div data-reveal="up">
+      <p class="eyebrow">Join the network</p>
+      <h2>Contribute, learn, and lead through real work</h2>
+      <p class="lede">Members are placed into small working groups to assess their skills and
+      commitment, with a transparent, merit-based path toward leadership &mdash; open to anyone
+      aged 15&ndash;30 with a serious interest in research.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="join.html">See how to join</a>
+        <a class="arrow-cta" href="community.html">
+          <span class="arrow-cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <span class="arrow-cta-label">Meet the community</span>
+        </a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section section--dark">
-  <div class="container grid-2">
-    <div>
-      <p class="eyebrow">Join the network</p>
-      <h2 class="section-title">Contribute, learn, and lead through real work</h2>
-      <p class="section-lede">
-      Members are placed into small working groups to assess their skills and commitment,
-      with a transparent, merit-based path toward leadership &mdash; open to anyone
-      aged 15&ndash;30 with a serious interest in research.</p>
-    </div>
-    <div style="align-self:center;">
-      <a class="btn btn-primary" href="join.html">See how to join &rarr;</a>
-    </div>
-  </div>
-</section>
 </main><footer class="site-footer">
   <div class="container">
     <div class="foot-top">
