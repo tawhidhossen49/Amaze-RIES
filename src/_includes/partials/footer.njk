@@ -1,0 +1,32 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="foot-top">
+      <div>
+        <div class="foot-brand">
+          <img src="assets/img/aries-logo-white.png" alt="" width="34" height="34" loading="lazy" decoding="async">
+          <span>ARIES</span>
+        </div>
+        <p class="foot-tag">Grassroots research across Bangladesh and beyond &mdash;
+        turning direct evidence into practical action. Part of the Amaze Consortium.</p>
+      </div>
+      <div class="foot-links">
+{%- for col in nav.footer %}
+        <div class="foot-col">
+          <span>{{ col.heading }}</span>
+{%- for link in col.links %}
+          <a href="{{ link.href }}">{{ link.label | safe }}</a>
+{%- endfor %}
+        </div>
+{%- endfor %}
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span data-year>2026</span> ARIES &mdash; a venture of Amaze Consortium.</span>
+      <div class="foot-socials">
+{%- for s in nav.socials %}
+        <a href="{{ s.href }}">{{ s.label }}{% if s.pending %}<span class="placeholder">tbc</span>{% endif %}</a>
+{%- endfor %}
+      </div>
+    </div>
+  </div>
+</footer>

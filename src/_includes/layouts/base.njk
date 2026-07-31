@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+{% include "partials/head.njk" %}
+<body>
+{% include "partials/icons.njk" %}
+<a class="skip-link" href="#main">Skip to content</a>
+{% include "partials/header.njk" %}
+{% include "partials/nav-mobile.njk" %}
+<main id="main">
+{{ content | safe }}
+</main>
+{% include "partials/footer.njk" %}
+{# Paper tooth. Purely decorative, inert to pointer and assistive tech, and
+   present without JavaScript. Suppressed under prefers-reduced-transparency. #}
+<div class="grain" aria-hidden="true"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "aries",
+  "version": "1.0.0",
+  "description": "ARIES — Amaze Research, Innovation & Exploration Society",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve",
+    "clean": "node -e \"fs.rmSync('_site',{recursive:true,force:true})\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tawhidhossen49/Amaze-RIES.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tawhidhossen49/Amaze-RIES/issues"
+  },
+  "homepage": "https://github.com/tawhidhossen49/Amaze-RIES#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6"
+  },
+  "overrides": {
+    "brace-expansion": "^5.0.9"
+  },
+  "private": true
+}

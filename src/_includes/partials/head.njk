@@ -1,0 +1,29 @@
+{#
+  The inline script below is pinned by a sha256 hash in the CSP `script-src`
+  in vercel.json. Changing it by a single character white-screens every page
+  in production. If it must change, regenerate the hash in the same commit.
+#}<head>
+<script>document.documentElement.className=document.documentElement.className.replace('no-js','js');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ title }}{{ site.titleSuffix | safe }}</title>
+<meta name="description" content="{{ description }}">
+<link rel="icon" type="image/png" href="{{ site.logo }}">
+<link rel="canonical" href="{{ page.outputPath | canonical(site.baseUrl) }}">
+<meta name="theme-color" content="{{ site.themeColor }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{{ title }}{{ site.titleSuffix | safe }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:url" content="{{ page.outputPath | canonical(site.baseUrl) }}">
+<meta property="og:image" content="{{ site.ogImage }}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{ title }}{{ site.titleSuffix | safe }}">
+<meta name="twitter:description" content="{{ description }}">
+{# Fonts are self-hosted. The display serif and the body sans are needed to
+   paint the first screen, so both are preloaded; the mono cuts and the
+   italic are used further down and are left to load normally. #}
+<link rel="preload" href="assets/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/libre-franklin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/main.css">
+</head>

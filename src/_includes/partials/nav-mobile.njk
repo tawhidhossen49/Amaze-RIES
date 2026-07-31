@@ -1,0 +1,17 @@
+{#
+  Lives outside <header> on purpose. The header sets `backdrop-filter`, which
+  makes it the containing block for this fixed drawer; parked off-canvas at
+  translateX(100%) that pushed the document to twice the viewport width on
+  phones. As a direct child of <body> its containing block is the viewport.
+  Do not move it back inside the header.
+#}
+<nav class="nav-mobile" id="mobile-nav" aria-label="Mobile">
+{%- for item in nav.primary %}
+{%- if item.children %}
+  <div class="nav-mobile-item"><a class="nav-mobile-link" href="{{ item.href }}" data-toggle="{{ item.panel }}" aria-expanded="false">{{ item.label }} <span class="chev" aria-hidden="true">&#9662;</span></a><div class="nav-mobile-children" id="{{ item.panel }}"><a href="{{ item.href }}">Overview</a>{% for child in item.children %}<a href="{{ child.href }}">{{ child.label }}</a>{% endfor %}</div></div>
+{%- else %}
+  <div class="nav-mobile-item"><a class="nav-mobile-link" href="{{ item.href }}">{{ item.label }}</a></div>
+{%- endif %}
+{%- endfor %}
+  <a class="nav-cta" href="{{ nav.cta.href }}">{{ nav.cta.label }}</a>
+</nav>

@@ -1,0 +1,24 @@
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <img src="{{ site.logo }}" alt="" width="38" height="38" decoding="async">
+      <span class="brand-word">ARIES<small>AMAZE RESEARCH, INNOVATION &amp; EXPLORATION SOCIETY</small></span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-desktop">
+{%- for item in nav.primary %}
+{%- set current = ' aria-current="page"' if item.section == activeSection else '' %}
+{%- if item.children %}
+        <li class="has-dropdown"><a class="nav-link" href="{{ item.href }}"{{ current | safe }}>{{ item.label }} <span class="chev" aria-hidden="true">&#9662;</span></a><div class="dropdown">{% for child in item.children %}<a href="{{ child.href }}"><p class="dd-title">{{ child.label }}</p><p class="dd-desc">{{ child.desc }}</p></a>{% endfor %}</div></li>
+{%- else %}
+        <li><a class="nav-link" href="{{ item.href }}"{{ current | safe }}>{{ item.label }}</a></li>
+{%- endif %}
+{%- endfor %}
+        <li><a class="nav-cta" href="{{ nav.cta.href }}">{{ nav.cta.label }}</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>

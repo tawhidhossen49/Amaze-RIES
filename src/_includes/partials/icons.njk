@@ -1,0 +1,15 @@
+{#
+  Icon sprite. Inlined once per page rather than fetched as an external
+  file: `<use>` against an external document costs an extra request and has
+  a long tail of support problems, and at this size the markup is cheaper
+  than the round trip.
+
+  One family, one 24x24 grid, one 2px stroke, `currentColor` throughout — so
+  an icon always takes the colour of whatever it sits in. Add new glyphs as
+  further <symbol>s here; do not paste raw <svg> into a page again.
+#}
+<svg class="icon-sprite" aria-hidden="true" focusable="false" width="0" height="0">
+  <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12h14M13 6l6 6-6 6"/>
+  </symbol>
+</svg>

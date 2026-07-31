@@ -2,6 +2,7 @@
 # independently of .gitignore.
 .claude/
 reference/
+Aries.zip
 aries.zip
 image *.jpg
 image *.png
