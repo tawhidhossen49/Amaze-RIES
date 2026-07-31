@@ -294,3 +294,53 @@ Work phase by phase. Do not start a phase before the previous one builds, render
 passes its checks. After each phase, give me a short summary of what changed and what
 you deliberately chose not to do, plus anything where you think my direction is wrong.
 Keep commits scoped to a single phase.
+
+
+
+
+last update after completing phase 1 
+Phase 1 complete
+Verification
+Check	Result
+Mobile sweep, 16 pages × 5 widths	80/80 ok — no overflow despite much larger display type
+CSP with production headers	0/16 issues
+JavaScript disabled	0/16 failures
+Contrast	64 — unchanged, all decorative .chev only, no regression
+Link check	0 broken
+Third-party requests	none
+What changed
+1. Fonts self-hosted. Newsreader, Libre Franklin, IBM Plex Mono as Latin-subset woff2 in assets/fonts/. Both preconnect tags and the Google stylesheet link are gone, and the CSP now reads style-src 'self' 'unsafe-inline'; font-src 'self' — zero third-party origins. Verified in-browser: no request leaves the origin.
+
+Three things worth flagging here:
+
+Newsreader ships as the true variable font and I proved the optical-size axis is live, not just declared: the same string at 64px measures 1209.67px at opsz:6 vs 1029.09px at opsz:72. font-optical-sizing:auto on body drives it from the used size, so display type gets the high-contrast cut and body copy the sturdy one, from one file.
+The old link was loading Newsreader italic (~143KB) for nothing. Every cite rule in the stylesheet sets font-style:normal and uses the mono face; nothing on the site renders serif italic. Dropped.
+.prose em was rendering faux-italic — the old link never requested a Libre Franklin italic. That's now a real cut.
+Net: 6 files/362KB → 5 files/218KB, with better rendering. Fonts get immutable cache headers.
+
+The one non-obvious detail: the nav chevron is U+25BE, outside the Latin subset. I kept explicit unicode-range declarations so it still falls through to a system face exactly as it did on Google's subset. Without them it would render as tofu on every page.
+
+2. Grain overlay. A 128px greyscale tile (10KB, generated deterministically) composited under overlay, where mid-grey is neutral — so it lightens and darkens the ground rather than tinting it, and works over cream and the dark green bands alike. Verified it's actually compositing rather than silently failing: the screenshot is 1.71× less compressible with it on. Suppressed under prefers-reduced-transparency (confirmed: display:block → none) and in print. The header's backdrop-filter is intact.
+
+3. Topo motif extended to tint bands and the footer at 230% and 300% scale with directional masks, so each placement shows a different fragment.
+
+I got this wrong first time and the measurement caught it: I'd used the four-value background-position edge-offset form (right -18% bottom -40%), which resolves against the difference between image and container — with an image 5× the box height it landed entirely outside and painted nothing. Two-value percentages fixed it. Confirmed painting at 1.029×.
+
+4. Type scale widened. Reading tiers (2xs–md) held exactly where they were — they were already checked for contrast and line length. Everything from lg up pushed hard: display now clamp(45px, 8.6vw, 124px) (was 42/7vw/96). Added four tracking tokens that tighten as size grows. Every minimum still fits 360px, which the 80/80 sweep proves.
+
+5. Tabular figures site-wide via one rule covering every numeric class. This matters because main.js counts figures up on reveal — proportional digits visibly jitter and shove labels around while settling.
+
+6. Icon sprite. All 17 arrows were byte-identical. Now one <symbol> inlined per page, referenced by <use>. Verified: 9 uses on the homepage, none zero-sized, still 17×17px, currentColor resolving correctly, sprite container itself 0×0. Inlined rather than an external file — <use> across documents costs a request and has a long support tail.
+
+Where I diverged from your brief
+I did not delete the "legacy" CSS blocks — because they are not legacy. Your brief said "confirm nothing uses them and remove them." I confirmed the opposite:
+
+.pub-entry renders 6 entries on research-publications.html
+.article-card renders 3 cards on insights-articles.html
+Both verified in the built output. Deleting them would have stripped two pages to unstyled text. The comment labels were simply wrong. I corrected them in place so this doesn't trap anyone else, and left the rules alone. If you know of a different legacy block you meant, point me at it.
+
+Notes for later phases
+style-src still needs 'unsafe-inline' for the 4 .bar-fill chart widths. That remains the only blocker to dropping it, and it's Phase 3's job.
+The grain sits at z-index:9000, above the mobile drawer (190) and header (200). Intentional, but worth knowing when Phase 4 adds pinned sections.
+I deliberately did not add a generic .topo-layer utility class — it would have been speculative abstraction with no second consumer yet. Phase 2 can generalise the two concrete rules when there's a real third use.
+Nothing committed. Ready for Phase 2 on your go-ahead.
