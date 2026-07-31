@@ -30,6 +30,11 @@
 
   /* --- accent: dry engraved brass, desaturated off gold leaf --- */
   --brass:#8E6A2B;
+  /* Text-safe brass. The accent above is 4.15:1 on --ground-sunk, which
+     fails AA for 12px copy like .eyebrow; this clears 4.5:1 on every
+     light ground while reading as the same colour. Use --brass for
+     rules, borders and icons; --brass-ink whenever it's actual text. */
+  --brass-ink:#7E5D26;
   --brass-bright:#B08D45;
   --brass-pale:#DCC793;
 
@@ -114,7 +119,13 @@
 :root{color-scheme:light;}
 
 *,*::before,*::after{box-sizing:border-box;}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+html{
+  scroll-behavior:smooth;-webkit-text-size-adjust:100%;
+  /* Body below uses `overflow-x:clip`, which is the stronger, newer form.
+     These are the fallback for browsers older than Safari 16 that don't
+     understand `clip` and would otherwise drop the declaration silently. */
+  overflow-x:hidden;max-width:100%;
+}
 body{
   margin:0;
   background:var(--ground);
@@ -190,7 +201,7 @@ button{font-family:inherit;}
 /* Mono micro-label */
 .eyebrow{
   font-family:var(--font-mono);font-size:var(--t-xs);letter-spacing:.16em;
-  text-transform:uppercase;color:var(--brass);margin:0 0 var(--sp-4);font-weight:500;
+  text-transform:uppercase;color:var(--brass-ink);margin:0 0 var(--sp-4);font-weight:500;
 }
 .section--dark .eyebrow,.section--brand .eyebrow{color:var(--brass-pale);}
 
@@ -211,6 +222,14 @@ h3.card-title{font-size:var(--t-lg);}
 /* Inline links in body copy */
 .prose a,.lede a,.form-note a,.c-value a,.pub-abstract a,.stat-label a{
   color:var(--pine-dark);text-underline-offset:2px;
+}
+/* …but pine-dark on a dark ground is all but invisible (1.21:1 in the
+   cover hero). On dark grounds the accent takes over. */
+.section--dark :is(.prose,.lede,.form-note,.c-value,.pub-abstract,.stat-label) a,
+.section--brand :is(.prose,.lede,.form-note,.c-value,.pub-abstract,.stat-label) a,
+.page-hero--cover :is(.prose,.lede,.form-note,.breadcrumb) a,
+.hero :is(.prose,.lede,.form-note) a{
+  color:var(--brass-pale);
 }
 
 /* Titles-only reference list */
@@ -502,7 +521,9 @@ h3.card-title{font-size:var(--t-lg);}
 .nav-mobile.is-open .nav-mobile-item:nth-child(4){transition-delay:.2s;}
 .nav-mobile.is-open .nav-mobile-item:nth-child(5){transition-delay:.25s;}
 .nav-mobile.is-open .nav-mobile-item:nth-child(6){transition-delay:.3s;}
-.nav-mobile.is-open .nav-cta{transition-delay:.35s;}
+/* The delay alone was here, without the opacity/transform reset the
+   items get — so the CTA stayed at opacity:0 and never appeared. */
+.nav-mobile.is-open .nav-cta{opacity:1;transform:translateY(0);transition-delay:.35s;}
 .nav-mobile-link{
   display:flex;justify-content:space-between;align-items:center;gap:var(--sp-4);
   padding:16px 2px;min-height:56px;
@@ -783,6 +804,19 @@ h3.card-title{font-size:var(--t-lg);}
 [data-reveal="scale"]{transform:scale(.97);}
 [data-reveal].is-revealed{opacity:1;transform:none;will-change:auto;}
 
+/* Reveals are opacity:0 until the script flips `.is-revealed`. If the
+   script never runs — blocked, failed, or disabled — the page must still
+   show its content rather than render blank. The inline snippet in <head>
+   swaps `no-js` for `js` before this file is parsed. */
+.no-js [data-reveal]{opacity:1 !important;transform:none !important;}
+
+/* The ±26px horizontal entrance is a wide-screen flourish. On a phone the
+   container already spans the gutter, so the pre-reveal offset pushes past
+   the viewport edge and widens the document. Rise instead. */
+@media (max-width:900px){
+  [data-reveal="left"],[data-reveal="right"]{transform:translateY(30px);}
+}
+
 /* Curtain wipe for imagery — the picture is uncovered rather than
    faded, which reads as deliberate rather than as a slow load. */
 [data-reveal="mask"]{
@@ -940,7 +974,9 @@ h3.card-title{font-size:var(--t-lg);}
 /* ---------- Figure ----------
    A standalone image with an optional caption, for the places a
    picture is illustration rather than a link target. */
-.figure{margin:0;}
+/* The reveal zooms the image to scale(1.08); without clipping, that
+   overhang widens the document on narrow screens. */
+.figure{margin:0;overflow:hidden;}
 .figure img{
   width:100%;height:100%;object-fit:cover;
   border-radius:var(--radius-lg);background:var(--pine-wash);
@@ -977,7 +1013,7 @@ h3.card-title{font-size:var(--t-lg);}
 .editorial-row:hover{background:var(--pine-wash-soft);}
 .section--dark .editorial-row:hover{background:rgba(255,255,255,.04);}
 .editorial-row .ed-index{
-  font-family:var(--font-mono);font-size:var(--t-xs);color:var(--brass);
+  font-family:var(--font-mono);font-size:var(--t-xs);color:var(--brass-ink);
   letter-spacing:.1em;text-transform:uppercase;margin-bottom:var(--sp-3);
 }
 .editorial-row h3{
@@ -1108,7 +1144,7 @@ h3.card-title{font-size:var(--t-lg);}
 .project-card h3{font-size:var(--t-lg);}
 .project-card p{font-size:15px;color:var(--sage);line-height:1.68;margin-bottom:var(--sp-5);}
 .project-card .proj-meta{
-  font-family:var(--font-mono);font-size:var(--t-xs);color:var(--sage-light);
+  font-family:var(--font-mono);font-size:var(--t-xs);color:var(--sage);
   display:flex;gap:var(--sp-5);border-top:1px solid var(--line);padding-top:var(--sp-4);
   flex-wrap:wrap;letter-spacing:.04em;
 }
@@ -1312,7 +1348,7 @@ h3.card-title{font-size:var(--t-lg);}
   padding:var(--sp-6) 0;border-bottom:1px solid var(--line);position:relative;
 }
 .step-item .s-num{
-  font-family:var(--font-mono);font-size:var(--t-xs);font-weight:500;color:var(--brass);
+  font-family:var(--font-mono);font-size:var(--t-xs);font-weight:500;color:var(--brass-ink);
   padding-top:6px;letter-spacing:.06em;font-variant-numeric:tabular-nums;
 }
 .step-item h3{font-size:var(--t-lg);margin-bottom:8px;}
@@ -1345,7 +1381,6 @@ h3.card-title{font-size:var(--t-lg);}
 .field{display:flex;flex-direction:column;gap:7px;margin-bottom:var(--sp-5);}
 .field.full{grid-column:1 / -1;}
 .field label{font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:.01em;}
-.field .hint{font-size:12.5px;color:var(--sage-light);}
 .field input,.field select,.field textarea{
   font-family:var(--font-sans);font-size:16px;padding:13px 14px;
   border:1px solid var(--line-strong);border-radius:var(--radius-sm);
@@ -1369,6 +1404,16 @@ h3.card-title{font-size:var(--t-lg);}
 .form-status:empty{display:none;}
 .form-status:focus{outline:none;}
 .field-error:empty{display:none;}
+
+/* Without the script there is nothing to intercept the submit, and the
+   form has no action — so it would silently GET this same page and look
+   like it did nothing. Point people at email and take the button away. */
+.form-noscript{
+  font-size:14.5px;margin-top:var(--sp-4);padding:13px 15px;border-radius:var(--radius-sm);
+  border-left:2px solid var(--brass);background:var(--pine-wash-soft);color:var(--ink-soft);
+}
+.form-noscript a{color:var(--pine-dark);}
+.no-js form[data-contact-form] button[type="submit"]{display:none;}
 
 /* ---------- Contact ---------- */
 .contact-grid{
@@ -1452,7 +1497,7 @@ h3.card-title{font-size:var(--t-lg);}
 .foot-bottom{
   display:flex;justify-content:space-between;padding:var(--sp-5) 0
     calc(var(--sp-5) + env(safe-area-inset-bottom));
-  font-size:var(--t-xs);color:#6E766C;font-family:var(--font-mono);
+  font-size:var(--t-xs);color:#828B80;font-family:var(--font-mono);
   flex-wrap:wrap;gap:10px;letter-spacing:.03em;
 }
 .foot-socials{display:flex;gap:18px;}
@@ -1500,3 +1545,30 @@ h3.card-title{font-size:var(--t-lg);}
   .reveal{opacity:1;transform:none;}
   [data-reveal]{opacity:1;transform:none;}
 }
+
+/* ---------- Utilities ----------
+   A small, closed set backing the handful of one-off overrides that used
+   to live in `style` attributes. Naming is by rendered pixel value so a
+   value in a mockup maps straight to a class; the token is used wherever
+   the scale already has one. Prefer a component class where one fits —
+   extend this block only when a page genuinely needs a one-off. */
+.u-mt-8{margin-top:var(--sp-2);}
+.u-mt-16{margin-top:var(--sp-4);}
+.u-mt-24{margin-top:var(--sp-5);}
+.u-mt-32{margin-top:var(--sp-6);}
+.u-mt-40{margin-top:2.5rem;}
+.u-mb-8{margin-bottom:var(--sp-2);}
+.u-mb-12{margin-bottom:var(--sp-3);}
+.u-mb-16{margin-bottom:var(--sp-4);}
+.u-mb-24{margin-bottom:var(--sp-5);}
+.u-mb-28{margin-bottom:1.75rem;}
+.u-mb-32{margin-bottom:var(--sp-6);}
+.u-mb-40{margin-bottom:2.5rem;}
+.u-mb-48{margin-bottom:var(--sp-7);}
+.u-ml-8{margin-left:var(--sp-2);}
+.u-mx-auto-24{margin:0 auto var(--sp-5);}
+.u-maxw-640{max-width:640px;}
+.u-center{text-align:center;}
+.u-inherit{color:inherit;}
+.u-inherit-underline{color:inherit;text-decoration:underline;}
+.u-grid-2{grid-template-columns:1fr 1fr;}

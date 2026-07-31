@@ -1,0 +1,7 @@
+# Keep local agent config and working material out of the deployment,
+# independently of .gitignore.
+.claude/
+reference/
+aries.zip
+image *.jpg
+image *.png

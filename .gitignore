@@ -1,0 +1,15 @@
+# Local agent/editor config — contains machine-specific absolute paths
+.claude/
+
+# Working material that is not part of the deployable site
+reference/
+aries.zip
+
+# Loose source images at the repo root; the shipped versions live in
+# assets/img/photo/ and nothing references these
+image *.jpg
+image *.png
+
+# OS cruft
+.DS_Store
+Thumbs.db
