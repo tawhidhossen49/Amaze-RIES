@@ -31,13 +31,13 @@ layout: layouts/base.njk
     ARIES is designed to function as a bridge between raw information and practical
     action. Its goal is not only to study problems but to transform findings into
     meaningful, evidence-based initiatives that can be implemented within and beyond
-    the Consortium &mdash; combining qualitative and quantitative approaches so that
+    the Consortium, combining qualitative and quantitative approaches so that
     insights reflect real conditions rather than theoretical assumptions.</p>
     <p>
     It also serves a second, deliberate purpose. Building and running each study is
     how ARIES itself grows: every pilot forms the foundation of a standing Amaze
     Researcher Team, and every finding is designed to feed directly back into an
-    <em>insight-to-action</em> model &mdash; where a gap such as low critical-thinking
+    <em>insight-to-action</em> model, where a gap such as low critical-thinking
     scores among students becomes the brief for a concrete Amaze initiative, like a
     workshop or essay competition, rather than a statistic that sits on a shelf.</p>
     </div>
@@ -88,21 +88,15 @@ layout: layouts/base.njk
         <p class="eyebrow" data-reveal="up">Leadership</p>
         <h2 class="section-title" data-reveal="up">Our research team</h2>
       </div>
-      <p class="lede">The proposal defines these roles for the Amaze Researcher Team &mdash;
-      still being staffed, so names below are placeholders <span class="placeholder">placeholder</span>
+      <p class="lede">The proposal defines these roles for the Amaze Researcher Team, which is still being staffed, so names below are placeholders <span class="placeholder">placeholder</span>
       until real people are confirmed.</p>
     </div>
     <div class="people-grid" data-reveal-group="up">
-      <div class="people-card"><div class="people-avatar" aria-hidden="true"><span>RA</span></div><p class="p-name">Name pending <span class="placeholder">placeholder</span></p><p class="p-role">Research Advisor</p></div>
-      <div class="people-card"><div class="people-avatar" aria-hidden="true"><span>RH</span></div><p class="p-name">Name pending <span class="placeholder">placeholder</span></p><p class="p-role">Research Head</p></div>
-      <div class="people-card"><div class="people-avatar" aria-hidden="true"><span>MT</span></div><p class="p-name">Name pending <span class="placeholder">placeholder</span></p><p class="p-role">Methodologist</p></div>
-      <div class="people-card"><div class="people-avatar" aria-hidden="true"><span>RW</span></div><p class="p-name">Name pending <span class="placeholder">placeholder</span></p><p class="p-role">Research Writer</p></div>
-      <div class="people-card"><div class="people-avatar" aria-hidden="true"><span>DM</span></div><p class="p-name">Name pending <span class="placeholder">placeholder</span></p><p class="p-role">Data Manager</p></div>
-      <div class="people-card"><div class="people-avatar" aria-hidden="true"><span>DA</span></div><p class="p-name">Name pending <span class="placeholder">placeholder</span></p><p class="p-role">Data Analyst</p></div>
-      <div class="people-card"><div class="people-avatar" aria-hidden="true"><span>EO</span></div><p class="p-name">Name pending <span class="placeholder">placeholder</span></p><p class="p-role">Ethics Officer</p></div>
-      <div class="people-card"><div class="people-avatar" aria-hidden="true"><span>DC</span></div><p class="p-name">Members &amp; associates</p><p class="p-role">Data Collectors</p></div>
+{%- for person in team %}
+      {% include "partials/people-card.njk" %}
+{%- endfor %}
     </div>
     <p class="form-note u-mt-8">Data Collectors is an open cohort of members
-    and associates rather than a single seat &mdash; see <a href="join.html">how to join</a>.</p>
+    and associates rather than a single seat. See <a href="join.html">how to join</a>.</p>
   </div>
 </section>

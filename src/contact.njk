@@ -13,7 +13,7 @@ layout: layouts/base.njk
     <p class="breadcrumb"><a href="index.html">Home</a> / Contact</p>
     <p class="eyebrow">Contact</p>
     <h1 data-split data-split-delay="120">Get in touch</h1>
-    <p class="lede">Contact details below are placeholders <span class="placeholder">placeholder</span> &mdash; the guidebook does
+    <p class="lede">Contact details below are placeholders <span class="placeholder">placeholder</span>. The guidebook does
     not supply a real email, phone number, or address for ARIES specifically. Replace
     before launch.</p>
   </div>
@@ -24,15 +24,15 @@ layout: layouts/base.njk
     <div>
       <div class="contact-item">
         <p class="c-label">Email</p>
-        <p class="c-value">hello@aries.amazeconsortium.org <span class="placeholder">placeholder</span></p>
+        <p class="c-value">{{ contact.email }}{% if contact.pending %} <span class="placeholder">placeholder</span>{% endif %}</p>
       </div>
       <div class="contact-item">
         <p class="c-label">Phone</p>
-        <p class="c-value">+880 00 0000 0000 <span class="placeholder">placeholder</span></p>
+        <p class="c-value">{{ contact.phone }}{% if contact.pending %} <span class="placeholder">placeholder</span>{% endif %}</p>
       </div>
       <div class="contact-item">
         <p class="c-label">Address</p>
-        <p class="c-value">Dhaka, Bangladesh <span class="placeholder">placeholder</span></p>
+        <p class="c-value">{{ contact.address }}{% if contact.pending %} <span class="placeholder">placeholder</span>{% endif %}</p>
       </div>
       <div class="contact-item">
         <p class="c-label">Legal</p>
@@ -46,8 +46,7 @@ layout: layouts/base.njk
 
     <div>
       <div class="placeholder-block u-mb-24" data-reveal="up">
-        This form is not connected to a mailbox yet <span class="placeholder">placeholder</span> &mdash;
-        it will validate what you type but cannot send it. Connect it to an email service
+        This form is not connected to a mailbox yet <span class="placeholder">placeholder</span>. It will validate what you type but cannot send it. Connect it to an email service
         before launch.
       </div>
       <form data-contact-form novalidate>
@@ -76,7 +75,7 @@ layout: layouts/base.njk
         <noscript>
           <p class="form-noscript">
             JavaScript is required to send this message from this page. Please email us
-            directly at <a href="mailto:hello@aries.amazeconsortium.org">hello@aries.amazeconsortium.org</a>
+            directly at <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
             <span class="placeholder">placeholder</span> instead.
           </p>
         </noscript>

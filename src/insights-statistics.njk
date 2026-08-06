@@ -10,7 +10,7 @@ layout: layouts/base.njk
     <p class="breadcrumb"><a href="index.html">Home</a> / <a href="insights.html">Insights</a> / Statistics</p>
     <p class="eyebrow">Insights &rarr; Statistics</p>
     <h1 data-split data-split-delay="120">Statistics</h1>
-    <p class="lede">ARIES hasn&rsquo;t collected its own dataset yet &mdash; Phase 1 hasn&rsquo;t
+    <p class="lede">ARIES hasn&rsquo;t collected its own dataset yet. Phase 1 hasn&rsquo;t
     launched. The figures below are national reference statistics from the literature
     review this pilot is grounded in, not ARIES fieldwork, shown here as the backdrop
     this research responds to.</p>
@@ -30,37 +30,8 @@ layout: layouts/base.njk
     Assessment figures and the 12-Point Ministry Roadmap, as cited in the literature review on
     the <a href="research-publications.html">Publications</a> page.</p>
 
-    <div class="chart-block" data-reveal="up">
-      <h3>Primary dropout rate: falling, but slowly</h3>
-      <div class="bar-row">
-        <span class="bar-label">2014 (Khan et al. baseline)</span>
-        <div class="bar-track"><div class="bar-fill is-muted" style="width:26.2%;"></div></div>
-        <span class="bar-value">26.2%</span>
-      </div>
-      <div class="bar-row">
-        <span class="bar-label">Current</span>
-        <div class="bar-track"><div class="bar-fill" style="width:13.95%;"></div></div>
-        <span class="bar-value">13.95%</span>
-      </div>
-      <p class="form-note u-mt-8">Attributed to expanded school-meal
-      programs, targeted stipends, and gender-parity initiatives.</p>
-    </div>
-
-    <div class="chart-block" data-reveal="up">
-      <h3>The graduate-to-job gap, each year</h3>
-      <div class="bar-row">
-        <span class="bar-label">New graduates, per year</span>
-        <div class="bar-track"><div class="bar-fill is-muted" style="width:100%;"></div></div>
-        <span class="bar-value">~700,000</span>
-      </div>
-      <div class="bar-row">
-        <span class="bar-label">Formal jobs created, per year</span>
-        <div class="bar-track"><div class="bar-fill" style="width:43%;"></div></div>
-        <span class="bar-value">~300,000</span>
-      </div>
-      <p class="form-note u-mt-8">The gap falls hardest on tertiary-educated
-      graduates, particularly women, and is a core reason this pilot studies job-oriented
-      mindset alongside perceptions of education.</p>
-    </div>
+{%- for chart in statistics %}
+    {% include "partials/chart.njk" %}
+{%- endfor %}
   </div>
 </section>

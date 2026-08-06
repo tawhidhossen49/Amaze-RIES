@@ -273,18 +273,29 @@
     var target = parseFloat(raw);
     if (!isFinite(target)) return null;
     var decimals = raw.indexOf(".") > -1 ? raw.split(".")[1].length : 0;
+    /* Whether the author wrote the number grouped. Parsing strips the
+       separators, so without this a figure like ~700,000 settles as
+       ~700000. */
+    var grouped = m[1].indexOf(",") > -1;
     var prefix = node.textContent.slice(0, m.index);
     var suffix = node.textContent.slice(m.index + m[1].length);
     /* Counting 0→2 reads as a glitch, not an effect. Small numbers
        just appear. */
     if (target < 10 && decimals === 0) return null;
-    node.textContent = prefix + (0).toFixed(decimals) + suffix;
-    return {node:node, prefix:prefix, suffix:suffix, target:target, decimals:decimals};
+    node.textContent = prefix + formatCount(0, decimals, grouped) + suffix;
+    return {node:node, prefix:prefix, suffix:suffix, target:target, decimals:decimals, grouped:grouped};
+  }
+  function formatCount(value, decimals, grouped){
+    var s = value.toFixed(decimals);
+    if (!grouped) return s;
+    var parts = s.split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
   }
   function runCountUp(spec){
     if (!spec) return;
     if (reduceMotion) {
-      spec.node.textContent = spec.prefix + spec.target.toFixed(spec.decimals) + spec.suffix;
+      spec.node.textContent = spec.prefix + formatCount(spec.target, spec.decimals, spec.grouped) + spec.suffix;
       return;
     }
     var start = null, dur = 1200;
@@ -292,12 +303,15 @@
       if (start === null) start = ts;
       var p = Math.min(1, (ts - start) / dur);
       var eased = 1 - Math.pow(1 - p, 3);
-      spec.node.textContent = spec.prefix + (spec.target * eased).toFixed(spec.decimals) + spec.suffix;
+      spec.node.textContent = spec.prefix + formatCount(spec.target * eased, spec.decimals, spec.grouped) + spec.suffix;
       if (p < 1) requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
   }
-  var COUNT_SELECTOR = ".stat-num, .sb-num, .hs-num";
+  /* .bar-value joins the count-up so a chart figure resolves at the same
+     time as the bar that represents it. The number arriving with its bar is
+     the point: it reads as a measurement settling, not as a counter. */
+  var COUNT_SELECTOR = ".stat-num, .sb-num, .hs-num, .bar-value";
   function countWithin(el){
     var nums = el.matches(COUNT_SELECTOR) ? [el] : el.querySelectorAll(COUNT_SELECTOR);
     Array.prototype.forEach.call(nums, function(num){
@@ -316,9 +330,14 @@
      Bar charts: capture the authored width, collapse, then grow
      back once the block scrolls into view.
   --------------------------------------------------------- */
+  /* The authored value now arrives as `data-value` (a percentage of the
+     chart's scale) rather than an inline `style="width:…"`. That is what
+     lets the CSP drop 'unsafe-inline' from style-src: setting .style.width
+     from script is CSSOM and is not governed by the policy, whereas the
+     same declaration written into the markup would be. */
   document.querySelectorAll(".bar-fill").forEach(function(bar){
-    bar.dataset.target = bar.style.width || "0%";
-    if (!reduceMotion) bar.style.width = "0%";
+    bar.dataset.target = (bar.dataset.value || "0") + "%";
+    bar.style.width = reduceMotion ? bar.dataset.target : "0%";
   });
   function runBars(container){
     if (!container.querySelectorAll) return;

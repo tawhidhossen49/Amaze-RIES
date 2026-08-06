@@ -32,6 +32,30 @@ module.exports = function (eleventyConfig) {
     new Date(d).toISOString().slice(0, 10)
   );
 
+  // Events are split by date at build time. On a static site that means the
+  // split is correct as of the last publish, so a scheduled daily rebuild is
+  // what keeps a finished event from sitting in "Upcoming" indefinitely.
+  const startOfToday = () => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    return d;
+  };
+  eleventyConfig.addFilter("upcoming", (events = []) =>
+    events
+      .filter((e) => e.date && new Date(e.date) >= startOfToday())
+      .sort((a, b) => new Date(a.date) - new Date(b.date))
+  );
+  eleventyConfig.addFilter("past", (events = []) =>
+    events
+      .filter((e) => e.date && new Date(e.date) < startOfToday())
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+  );
+  eleventyConfig.addFilter("eventDate", (d) =>
+    new Date(d).toLocaleDateString("en-GB", {
+      day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
+    })
+  );
+
   eleventyConfig.addCollection("pages", (collection) =>
     collection
       .getFilteredByGlob("src/*.njk")

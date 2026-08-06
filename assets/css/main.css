@@ -691,13 +691,19 @@ h3.card-title{font-size:var(--t-lg);}
    for a section that is already min-height driven. */
 @supports not (height:1svh){ .hero{min-height:min(88vh,860px);} }
 
-.hero-media{position:absolute;inset:0;z-index:-2;}
+.hero-media{position:absolute;inset:0;z-index:-2;overflow:hidden;}
 .hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 40%;}
 .hero::before{
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  /* Measured against the actual photograph rather than assumed: the old
+     gradient dipped to .12 alpha across the middle, and the worst-case
+     backdrop pixel behind the lede came out at 1.55:1 where 4.5:1 is
+     needed. The floor is raised through the whole text zone and the
+     falloff moved to the upper right, which is the only part of the frame
+     that carries no type. */
   background:
-    linear-gradient(180deg,rgba(7,34,15,.55) 0%,rgba(7,34,15,.12) 34%,rgba(7,34,15,.72) 82%,rgba(7,34,15,.9) 100%),
-    linear-gradient(96deg,rgba(7,34,15,.62) 0%,rgba(7,34,15,.16) 62%,rgba(7,34,15,0) 100%);
+    linear-gradient(180deg,rgba(7,34,15,.66) 0%,rgba(7,34,15,.54) 24%,rgba(7,34,15,.86) 58%,rgba(7,34,15,.95) 100%),
+    linear-gradient(96deg,rgba(7,34,15,.82) 0%,rgba(7,34,15,.56) 52%,rgba(7,34,15,.08) 100%);
 }
 .hero > .container{position:relative;z-index:1;width:100%;}
 .hero-inner{max-width:23ch;}
@@ -809,8 +815,8 @@ h3.card-title{font-size:var(--t-lg);}
     padding:calc(var(--sp-section) + 24px) 0 var(--sp-section-tight);
   }
   .hero::before{
-    background:linear-gradient(178deg,rgba(7,34,15,.62) 0%,rgba(7,34,15,.3) 30%,
-      rgba(7,34,15,.78) 74%,rgba(7,34,15,.93) 100%);
+    background:linear-gradient(178deg,rgba(7,34,15,.74) 0%,rgba(7,34,15,.68) 26%,
+      rgba(7,34,15,.90) 66%,rgba(7,34,15,.96) 100%);
   }
   .hero h1{max-width:none;line-height:1.06;}
   .hero .actions{gap:14px;}
@@ -862,25 +868,25 @@ h3.card-title{font-size:var(--t-lg);}
 }
 @supports not (height:1svh){ .page-hero--cover{min-height:min(56vh,520px);} }
 .page-hero--cover::after{display:none;}
-.page-hero--cover .hero-media{position:absolute;inset:0;z-index:-2;}
+.page-hero--cover .hero-media{position:absolute;inset:0;z-index:-2;overflow:hidden;}
 .page-hero--cover .hero-media img{width:100%;height:100%;object-fit:cover;object-position:center 42%;}
 .page-hero--cover::before{
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:
-    linear-gradient(180deg,rgba(7,34,15,.66) 0%,rgba(7,34,15,.24) 38%,rgba(7,34,15,.8) 100%),
-    linear-gradient(96deg,rgba(7,34,15,.7) 0%,rgba(7,34,15,.24) 66%,rgba(7,34,15,.05) 100%);
+    linear-gradient(180deg,rgba(7,34,15,.74) 0%,rgba(7,34,15,.52) 36%,rgba(7,34,15,.88) 100%),
+    linear-gradient(96deg,rgba(7,34,15,.80) 0%,rgba(7,34,15,.50) 60%,rgba(7,34,15,.10) 100%);
 }
 .page-hero--cover > .container{width:100%;}
 .page-hero--cover h1{color:#FCFDFA;max-width:17ch;}
-.page-hero--cover .lede{color:rgba(241,239,232,.86);}
+.page-hero--cover .lede{color:rgba(241,239,232,.95);}
 .page-hero--cover .eyebrow{color:var(--brass-pale);}
-.page-hero--cover .breadcrumb{color:rgba(241,239,232,.66);}
-.page-hero--cover .breadcrumb a{color:rgba(241,239,232,.66);}
+.page-hero--cover .breadcrumb{color:rgba(241,239,232,.92);}
+.page-hero--cover .breadcrumb a{color:rgba(241,239,232,.92);}
 .page-hero--cover .breadcrumb a:hover{color:#fff;}
 @media (max-width:700px){
   .page-hero--cover{min-height:min(46svh,400px);}
   .page-hero--cover::before{
-    background:linear-gradient(178deg,rgba(7,34,15,.66) 0%,rgba(7,34,15,.5) 40%,rgba(7,34,15,.88) 100%);
+    background:linear-gradient(178deg,rgba(7,34,15,.76) 0%,rgba(7,34,15,.66) 40%,rgba(7,34,15,.92) 100%);
   }
 }
 @supports not (height:1svh){
@@ -1069,14 +1075,14 @@ h3.card-title{font-size:var(--t-lg);}
   padding:var(--sp-6) var(--sp-5) var(--sp-6);
   display:flex;flex-direction:column;gap:var(--sp-3);flex:1;
 }
-.media-card-body h3{
+.media-card-body :is(h2,h3){
   font-size:var(--t-xl);letter-spacing:-.02em;
   background-image:linear-gradient(currentColor,currentColor);
   background-size:0% 1.5px;background-position:0 100%;background-repeat:no-repeat;
   transition:background-size var(--dur-slow) var(--ease);
   display:inline;
 }
-.media-card:hover .media-card-body h3{background-size:100% 1.5px;}
+.media-card:hover .media-card-body :is(h2,h3){background-size:100% 1.5px;}
 .media-card-body p{font-size:15px;color:var(--sage);line-height:1.68;}
 .section--dark .media-card-body p{color:var(--paper-on-dark-soft);}
 .media-card-body .arrow-cta{margin-top:auto;padding-top:var(--sp-4);}
@@ -1088,7 +1094,7 @@ h3.card-title{font-size:var(--t-lg);}
 }
 .media-card--wide .media-card-img{aspect-ratio:auto;height:100%;min-height:280px;}
 .media-card--wide .media-card-body{padding:clamp(28px,3.4vw,52px);justify-content:center;}
-.media-card--wide .media-card-body h3{font-size:var(--t-2xl);letter-spacing:var(--track-2xl);}
+.media-card--wide .media-card-body :is(h2,h3){font-size:var(--t-2xl);letter-spacing:var(--track-2xl);}
 @media (max-width:820px){
   .media-card--wide{grid-template-columns:1fr;}
   .media-card--wide .media-card-img{aspect-ratio:16/9;min-height:0;}
@@ -1241,8 +1247,8 @@ h3.card-title{font-size:var(--t-lg);}
 .article-card .art-body{padding:var(--sp-5);display:flex;flex-direction:column;gap:var(--sp-3);}
 .article-card .art-meta{font-family:var(--font-mono);font-size:var(--t-2xs);color:var(--sage);
   letter-spacing:.06em;text-transform:uppercase;}
-.article-card h3{font-size:var(--t-lg);transition:color var(--dur-fast) ease;}
-.article-card:hover h3{color:var(--pine-dark);}
+.article-card :is(h2,h3){font-size:var(--t-lg);transition:color var(--dur-fast) ease;}
+.article-card:hover :is(h2,h3){color:var(--pine-dark);}
 .article-card p{font-size:14.5px;color:var(--sage);line-height:1.64;}
 
 /* ---------- Status + project ---------- */
@@ -1577,7 +1583,7 @@ h3.card-title{font-size:var(--t-lg);}
   display:flex;align-items:center;
   background:var(--pine-deep);color:var(--ground);isolation:isolate;
 }
-.full-bleed-media{position:absolute;inset:0;z-index:-2;}
+.full-bleed-media{position:absolute;inset:0;z-index:-2;overflow:hidden;}
 .full-bleed-media img{width:100%;height:100%;object-fit:cover;}
 .full-bleed::before{
   content:"";position:absolute;inset:0;z-index:-1;
@@ -1616,7 +1622,7 @@ h3.card-title{font-size:var(--t-lg);}
   display:block;font-family:var(--font-mono);font-size:var(--t-2xs);letter-spacing:.13em;
   color:var(--brass-pale);margin-bottom:var(--sp-4);text-transform:uppercase;
 }
-.foot-col a{
+.foot-col a{padding:3px 0;
   display:block;color:#B6BEB4;text-decoration:none;margin-top:10px;font-size:14px;
   transition:color var(--dur-fast) ease;width:fit-content;
 }
@@ -1628,7 +1634,7 @@ h3.card-title{font-size:var(--t-lg);}
   flex-wrap:wrap;gap:10px;letter-spacing:.03em;
 }
 .foot-socials{display:flex;gap:18px;}
-.foot-socials a{color:#858E82;text-decoration:none;transition:color var(--dur-fast) ease;}
+.foot-socials a{color:#858E82;text-decoration:none;display:inline-flex;align-items:center;min-height:24px;padding:2px 0;transition:color var(--dur-fast) ease;}
 .foot-socials a:hover{color:#fff;}
 @media (max-width:700px){
   .foot-top{flex-direction:column;gap:var(--sp-6);}
@@ -1739,3 +1745,192 @@ h3.card-title{font-size:var(--t-lg);}
   width:1em;height:1em;display:block;flex:none;
   fill:none;stroke:currentColor;
 }
+
+/* ---------- Events ----------
+   A dated record rather than a card grid: the date column is the spine, so
+   a list of sessions scans like a calendar. Rendered from events data, and
+   absent entirely until the admin adds the first one. */
+.event-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);}
+.event-item{
+  display:grid;grid-template-columns:minmax(150px,190px) minmax(0,1fr);
+  gap:var(--sp-5) var(--sp-6);
+  padding:var(--sp-6) 18px var(--sp-6) 18px;margin:0 -18px;
+  border-bottom:1px solid var(--line);border-left:2px solid transparent;
+  transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease);
+}
+.event-item:hover{background:var(--pine-wash-soft);border-left-color:var(--brass);}
+.event-when{display:flex;flex-direction:column;gap:4px;padding-top:4px;}
+.event-date{
+  font-family:var(--font-mono);font-size:var(--t-xs);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--pine-dark);font-weight:500;
+}
+.event-time{font-family:var(--font-mono);font-size:var(--t-2xs);color:var(--sage);letter-spacing:.06em;}
+.event-body h3{font-size:var(--t-xl);margin-bottom:8px;}
+.event-loc{
+  font-family:var(--font-mono);font-size:var(--t-2xs);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--sage);margin-bottom:10px;
+}
+.event-summary{font-size:var(--t-base);color:var(--ink-soft);line-height:1.7;max-width:62ch;}
+@media (max-width:700px){
+  .event-item{grid-template-columns:1fr;gap:var(--sp-3);}
+  .event-when{flex-direction:row;gap:12px;align-items:baseline;padding-top:0;}
+}
+
+/* ---------- Charts ----------
+   The <table> is the content and the bars are a rendering of it. With the
+   script running the table stays in the accessibility tree but off-screen,
+   because the bars already carry the same numbers visually. With no script
+   the bars would all be zero-width, so the table becomes the visible form
+   instead. Neither state ever shows a reader an empty track. */
+.chart{
+  margin:0;padding:var(--sp-6) 0;border-top:1px solid var(--line);
+}
+.chart:first-of-type{border-top:none;}
+.chart-head :is(h2,h3){font-size:var(--t-lg);margin-bottom:var(--sp-5);max-width:30ch;}
+.chart-bars{display:flex;flex-direction:column;gap:var(--sp-4);}
+
+.js .chart-table{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+.no-js .chart-bars{display:none;}
+.no-js .chart-table{
+  width:100%;border-collapse:collapse;margin-bottom:var(--sp-4);
+}
+.no-js .chart-table th,.no-js .chart-table td{
+  text-align:left;padding:10px 14px 10px 0;border-bottom:1px solid var(--line);
+  font-size:var(--t-base);
+}
+.no-js .chart-table thead th{
+  font-family:var(--font-mono);font-size:var(--t-2xs);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--sage);font-weight:500;
+}
+.no-js .chart-table td{font-variant-numeric:tabular-nums;color:var(--ink);}
+
+.chart-note{
+  font-size:13.5px;color:var(--sage);line-height:1.6;margin-top:var(--sp-4);max-width:62ch;
+}
+.chart-source{
+  font-family:var(--font-mono);font-size:var(--t-2xs);letter-spacing:.06em;
+  color:var(--sage);margin-top:var(--sp-3);
+}
+
+/* ---------- Staggered card run ----------
+   Replaces the three-equal-column grid. Three identical cards in a row is
+   the single most template-looking arrangement available, and it appeared
+   on the homepage and the articles page.
+
+   Instead the run is asymmetric on both axes: unequal spans across a
+   12-column field, and unequal vertical offsets, so the eye travels down
+   the page rather than scanning a rack. Offsets are positive margins only,
+   so nothing overlaps and nothing can be pushed outside the container.
+
+   Collapses to a single column well before the offsets would crowd. */
+@media (min-width:901px){
+  .card-grid--stagger{
+    grid-template-columns:repeat(12,minmax(0,1fr));
+    gap:var(--sp-6) var(--sp-6);
+    align-items:start;
+  }
+  /* Rows are assigned explicitly. Left to auto-placement, the offset on
+     the second card pushed its box past the end of its implicit row while
+     the third card started from the row boundary, so the two overlapped by
+     roughly 48x32px from 1024px up. Naming the rows makes the second row
+     start after the first row's full outer height, margin included. */
+  .card-grid--stagger > *:nth-child(1){grid-column:1 / span 7;grid-row:1;}
+  .card-grid--stagger > *:nth-child(2){grid-column:8 / span 5;grid-row:1;margin-top:var(--sp-9);}
+  .card-grid--stagger > *:nth-child(3){grid-column:2 / span 6;grid-row:2;margin-top:var(--sp-6);}
+  /* A fourth item onward falls back to a sensible half-width rhythm. */
+  .card-grid--stagger > *:nth-child(n+4){grid-column:span 6;}
+}
+@media (min-width:641px) and (max-width:900px){
+  .card-grid--stagger{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .card-grid--stagger > *:nth-child(2){margin-top:var(--sp-7);}
+}
+@media (max-width:640px){
+  .card-grid--stagger{grid-template-columns:1fr;}
+  .card-grid--stagger > *{margin-top:0;}
+}
+
+/* ---------- Cross-page view transitions ----------
+   A 16-page static site navigating between documents is exactly what the
+   View Transitions API was built for. The brand mark, the page title and
+   the hero image are named, so they persist across a navigation instead of
+   the whole page flashing.
+
+   Where the API is unsupported this is inert and navigation is normal.
+   Under reduced motion the transition is suppressed below. */
+@view-transition{navigation:auto;}
+
+.brand img{view-transition-name:brand-mark;}
+.page-hero h1,.hero h1{view-transition-name:page-title;}
+.page-hero--cover .hero-media img{view-transition-name:hero-media;}
+
+::view-transition-old(root),::view-transition-new(root){
+  animation-duration:.32s;
+  animation-timing-function:var(--ease-out);
+}
+::view-transition-group(brand-mark),
+::view-transition-group(page-title),
+::view-transition-group(hero-media){
+  animation-duration:.42s;
+  animation-timing-function:var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce){
+  /* Suppress the whole cross-document transition rather than merely
+     shortening it: a cross-fade is still motion. */
+  @view-transition{navigation:none;}
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*){animation:none !important;}
+}
+
+/* ---------- Weighted interaction ----------
+   Hover feedback uses a spring rather than a symmetrical ease, so a card
+   feels like it has mass: it overshoots very slightly on the way up and
+   settles. Deliberately small numbers. On a research site the cue should
+   register as responsiveness, not as an effect. */
+:root{
+  --spring-out:cubic-bezier(.34,1.42,.44,1);
+}
+.media-card,.article-card,.pub-entry,.event-item,.people-card{
+  transition:transform var(--dur) var(--spring-out),
+             box-shadow var(--dur) var(--ease),
+             border-color var(--dur) var(--ease),
+             background var(--dur) var(--ease);
+}
+.media-card:hover,.article-card:hover{transform:translateY(-3px);}
+.people-card:hover{transform:translateY(-2px);}
+.arrow-cta:hover .arrow-cta-icon,.arrow-cta:focus-visible .arrow-cta-icon{
+  transition:background var(--dur) var(--ease),transform var(--dur) var(--spring-out);
+}
+.btn{transition:background var(--dur) var(--ease),color var(--dur) var(--ease),
+     border-color var(--dur) var(--ease),box-shadow var(--dur) var(--ease),
+     transform var(--dur-fast) var(--spring-out);}
+.btn:active{transform:translateY(1px);}
+
+/* Event rows pick up the same brass edge the publication list uses, drawn
+   rather than switched, so the two dated lists behave identically. */
+.event-item{position:relative;}
+.event-item::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--brass);transform:scaleY(0);transform-origin:top;
+  transition:transform var(--dur) var(--ease-out);
+}
+.event-item:hover::before{transform:scaleY(1);}
+.event-item:hover{border-left-color:transparent;}
+
+@media (prefers-reduced-motion: reduce){
+  .media-card:hover,.article-card:hover,.people-card:hover,.btn:active{transform:none;}
+  .event-item::before{display:none;}
+}
+
+/* Breadcrumb links are navigation, not prose, so the WCAG 2.2 inline-link
+   exception does not cover them and 15px tall is too small to hit reliably.
+   The hit area grows with padding and is pulled back with a matching
+   negative margin, so nothing about the visual rhythm moves.
+   Inline links inside sentences (.c-value a, .prose a and friends) are
+   deliberately left alone: they are exempt, and padding them would break
+   the line spacing of the paragraph they sit in. */
+.breadcrumb a{display:inline-block;padding:5px 3px;margin:-5px -3px;}

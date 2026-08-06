@@ -1,0 +1,19 @@
+{#
+  One person, rendered the same way on About (research leadership) and on
+  Community → Members. Driven entirely by a data entry, so adding, editing
+  or removing a person is a content change and never a template change.
+
+  `photo` is optional. Until one is uploaded the card falls back to the
+  initials plate, which is why the avatar keeps its own background. The
+  `pending` flag is what prints the placeholder chip — it disappears on its
+  own the moment a real name is entered.
+#}
+<div class="people-card">
+  <div class="people-avatar" {% if not person.photo %}aria-hidden="true"{% endif %}>
+    {%- if person.photo %}
+    <img src="{{ person.photo }}" alt="{{ person.name }}" width="480" height="480" loading="lazy" decoding="async">
+    {%- else %}<span>{{ person.initials }}</span>{% endif %}
+  </div>
+  <p class="p-name">{{ person.name }}{% if person.pending %} <span class="placeholder">placeholder</span>{% endif %}</p>
+  <p class="p-role">{{ person.role }}</p>
+</div>

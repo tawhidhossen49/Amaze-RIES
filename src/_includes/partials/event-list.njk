@@ -1,0 +1,31 @@
+{#
+  Renders one list of events, or the page's existing placeholder copy when
+  there are none. Both branches matter: the site launches with an empty
+  calendar, and the honest empty state is part of the design rather than a
+  failure mode. Expects `list` and `emptyCopy`.
+#}
+{%- if list.length %}
+<ol class="event-list" data-reveal-group="up">
+{%- for ev in list %}
+  <li class="event-item">
+    <div class="event-when">
+      <time class="event-date" datetime="{{ ev.date }}">{{ ev.date | eventDate }}</time>
+      {%- if ev.time %}<span class="event-time">{{ ev.time }}</span>{% endif %}
+    </div>
+    <div class="event-body">
+      <h3>{{ ev.title }}</h3>
+      {%- if ev.location %}<p class="event-loc">{{ ev.location }}</p>{% endif %}
+      {%- if ev.summary %}<p class="event-summary">{{ ev.summary }}</p>{% endif %}
+      {%- if ev.link %}
+      <a class="arrow-cta arrow-cta--sm u-mt-16" href="{{ ev.link }}">
+        <span class="arrow-cta-icon" aria-hidden="true"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></span>
+        <span class="arrow-cta-label">{{ ev.linkLabel | default("Details") }}</span>
+      </a>
+      {%- endif %}
+    </div>
+  </li>
+{%- endfor %}
+</ol>
+{%- else %}
+<div class="placeholder-block" data-reveal="up">{{ emptyCopy | safe }}</div>
+{%- endif %}

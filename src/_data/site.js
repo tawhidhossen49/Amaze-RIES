@@ -1,8 +1,9 @@
 module.exports = {
   name: "ARIES",
-  // The em dash and the encoded ampersand here are reproduced verbatim in
-  // every <title>; changing either changes 16 pages at once.
-  titleSuffix: " | ARIES — Amaze Research, Innovation &amp; Exploration Society",
+  // Reproduced verbatim in every <title>, og:title and twitter:title;
+  // changing it changes 16 pages at once. The colon replaced an em dash in
+  // the Phase 5 copy pass.
+  titleSuffix: " | ARIES: Amaze Research, Innovation &amp; Exploration Society",
   baseUrl: "https://www.amazeconsortium.org/aries/",
   themeColor: "#0E4A2A",
   logo: "assets/img/aries-logo-green.png",
