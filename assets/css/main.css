@@ -979,7 +979,11 @@ h3.card-title{font-size:var(--t-lg);}
 .split-word > i{
   display:inline-block;font-style:inherit;
   transform:translateY(110%);
-  animation:wordRise .95s var(--ease-out) both;
+  /* Tightened from .95s. Each word is clipped by its own mask while it
+     rises, so the longer this runs the longer a headline sits in a
+     half-drawn state — which is what reads as a glitch on arrival,
+     especially when a page transition is playing at the same time. */
+  animation:wordRise .6s var(--ease-out) both;
 }
 @keyframes wordRise{from{transform:translateY(110%);}to{transform:translateY(0);}}
 
@@ -1862,17 +1866,29 @@ h3.card-title{font-size:var(--t-lg);}
    Under reduced motion the transition is suppressed below. */
 @view-transition{navigation:auto;}
 
+/* Only the brand mark is named.
+
+   Naming an element lifts it out of the page's normal paint order into its
+   own transition layer for the duration of the animation. That is exactly
+   what broke the hero: the photograph was named, but its scrim is a
+   ::before on the parent, so the image floated above its own darkening
+   layer and flashed at full brightness mid-navigation, taking the headline
+   contrast with it.
+
+   The title was worse. Morphing between two headlines with different text,
+   size and position cannot cross-fade cleanly, so it smeared and collided
+   with the lede beneath it while the word-rise animation was also running.
+
+   The mark is the one element genuinely identical on every page, so it is
+   the only one that can morph without artefacts. Everything else rides the
+   root cross-fade, where the scrim stays composited with its photograph. */
 .brand img{view-transition-name:brand-mark;}
-.page-hero h1,.hero h1{view-transition-name:page-title;}
-.page-hero--cover .hero-media img{view-transition-name:hero-media;}
 
 ::view-transition-old(root),::view-transition-new(root){
   animation-duration:.32s;
   animation-timing-function:var(--ease-out);
 }
-::view-transition-group(brand-mark),
-::view-transition-group(page-title),
-::view-transition-group(hero-media){
+::view-transition-group(brand-mark){
   animation-duration:.42s;
   animation-timing-function:var(--ease-out);
 }
@@ -1934,3 +1950,73 @@ h3.card-title{font-size:var(--t-lg);}
    deliberately left alone: they are exempt, and padding them would break
    the line spacing of the paragraph they sit in. */
 .breadcrumb a{display:inline-block;padding:5px 3px;margin:-5px -3px;}
+
+/* ---------- Button label roll ----------
+   The primary call to action sits on cream over a photograph, so the old
+   hover (#F7F5F0 to #FFFFFF) was a ~3% brightness shift and read as no
+   response at all.
+
+   Instead the label itself moves. One copy leaves through the top of a mask
+   while an identical copy arrives from the bottom, which is the same masked
+   rise the display headings already use for `data-split`. Reusing that
+   gesture is the point: the button answers in the site's own vocabulary
+   rather than borrowing a generic fill or scale.
+
+   The mask is sized by line-height rather than by the glyph box so that
+   descenders in labels like "join" and "message" are never clipped. */
+.btn-label{
+  position:relative;display:block;overflow:hidden;
+  line-height:1.5;
+}
+.btn-label > span{
+  display:block;
+  transition:transform .5s var(--ease-out),opacity .5s var(--ease-out);
+  will-change:transform;
+}
+.btn-label > span + span{
+  position:absolute;left:0;right:0;top:0;
+  transform:translateY(105%);
+  opacity:0;
+}
+.btn:hover .btn-label > span,
+.btn:focus-visible .btn-label > span{transform:translateY(-105%);opacity:0;}
+.btn:hover .btn-label > span + span,
+.btn:focus-visible .btn-label > span + span{transform:translateY(0);opacity:1;}
+
+/* The ground turns brass on hover. Brass is the only accent this palette
+   carries besides the pine, so it is the one colour that can signal a state
+   change without either repeating the brand green or importing something
+   foreign. #B08D45 against pine-deep measures 5.42:1, which clears AA for a
+   14.5px label with headroom to spare, and the shift away from cream is
+   large enough to be unmistakable where the old cream-to-white was not.
+
+   The button also grows very slightly. 2.5% on a 50px control is about a
+   pixel of height: enough to register as the control coming forward, small
+   enough that nothing around it appears to move. Transform, so no layout
+   is disturbed. */
+.btn-primary{
+  transition:background var(--dur) var(--ease),color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),box-shadow var(--dur) var(--ease),
+    transform .34s var(--spring-out);
+}
+.hero .btn-primary{box-shadow:0 1px 2px rgba(7,34,15,.14);}
+.btn-primary:hover,.btn-primary:focus-visible,
+.hero .btn-primary:hover,.hero .btn-primary:focus-visible{
+  background:var(--brass-bright);
+  color:var(--pine-deep);
+  transform:scale(1.025);
+}
+.hero .btn-primary:hover,.hero .btn-primary:focus-visible{box-shadow:0 12px 28px rgba(7,34,15,.34);}
+.btn-primary:hover,.btn-primary:focus-visible{box-shadow:0 10px 22px rgba(7,34,15,.24);}
+/* Pressing settles it back towards its resting size. */
+.btn-primary:active{transform:scale(1.008);}
+
+@media (prefers-reduced-motion: reduce){
+  /* No roll. The second copy is dropped entirely and the ground carries the
+     whole state change, so there is still visible feedback. */
+  .btn-label > span + span{display:none;}
+  .btn:hover .btn-label > span,
+  .btn:focus-visible .btn-label > span{transform:none;opacity:1;}
+  .btn-primary:hover,.btn-primary:focus-visible,
+  .hero .btn-primary:hover,.hero .btn-primary:focus-visible{transform:none;}
+}

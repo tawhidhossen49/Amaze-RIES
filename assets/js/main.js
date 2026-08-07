@@ -196,7 +196,7 @@
   --------------------------------------------------------- */
   (function splitHeadings(){
     if (reduceMotion) return;
-    var WORD_MS = 55;
+    var WORD_MS = 34;
     document.querySelectorAll("[data-split]").forEach(function(el){
       var delay = parseFloat(el.getAttribute("data-split-delay")) || 0;
       var i = 0;
