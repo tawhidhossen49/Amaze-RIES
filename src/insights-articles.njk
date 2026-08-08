@@ -1,6 +1,6 @@
 ---
 title: "Articles"
-description: "Editorial writing on ARIES research and the context behind it."
+description: "ARIES editorial writing is published in First Principles, the Amaze Consortium newsletter."
 permalink: "insights-articles.html"
 activeSection: "insights"
 layout: layouts/base.njk
@@ -10,45 +10,99 @@ layout: layouts/base.njk
     <p class="breadcrumb"><a href="index.html">Home</a> / <a href="insights.html">Insights</a> / Articles</p>
     <p class="eyebrow">Insights &rarr; Articles</p>
     <h1 data-split data-split-delay="120">Articles</h1>
-    <p class="lede">Editorial writing on ARIES research and its context, related in
-    spirit to <em>First Principles</em>, the wider Amaze Consortium newsletter.
-    The three pieces below unpack the literature this pilot is built on. Full-length drafts to follow as the research team develops them.</p>
+    <p class="lede">ARIES does not run its own editorial desk. Writing about this research,
+    and about the context it sits in, is published in <em>First Principles</em>, the Amaze
+    Consortium newsletter. This page is the imprint: where that writing lives, and what it covers.</p>
   </div>
 </section>
 
+{#
+  The imprint plate.
+
+  A journal that carries no editorial of its own prints a colophon saying
+  where its writing appears. That is exactly this page's job, so the whole
+  plate is one link and the address itself is the largest thing on it:
+  a masthead rather than a button with a URL bolted to it.
+#}
+<section class="section section--dark imprint-section">
+  <div class="container">
+    {# The whole plate is the link, so without an explicit label a screen
+         reader announces every word inside it as the link name. The label
+         keeps the visible call to action as its opening words, which is what
+         WCAG 2.5.3 asks for and what voice control needs to match. #}
+    <a class="imprint" href="https://fp.amazeconsortium.org/"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Read First Principles at fp.amazeconsortium.org (opens in a new tab)">
+      <span class="imprint-eyebrow">Editorial published at</span>
+
+      <span class="imprint-name">First Principles</span>
+
+      <span class="imprint-meta">
+        <span class="imprint-desc">The Amaze Consortium newsletter. Long-form writing on
+        education, evidence, and the work behind both.</span>
+      </span>
+
+      <span class="imprint-address">
+        <span class="imprint-rule" aria-hidden="true"></span>
+        <span class="imprint-url">fp.amazeconsortium.org</span>
+        <span class="imprint-rule" aria-hidden="true"></span>
+      </span>
+
+      <span class="imprint-go">
+        <span class="imprint-go-icon" aria-hidden="true">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-up-right"/></svg>
+        </span>
+        <span class="imprint-go-label">Read First Principles</span>
+      </span>
+    </a>
+  </div>
+</section>
+
+{#
+  Contents, not cards. These are the recurring subjects the editorial
+  returns to, each tied to one of the study's three lenses, set as a ruled
+  index the way a journal lists its contents. Nothing here claims to be a
+  published piece, because none of it is published here.
+#}
 <section class="section section--paper">
   <div class="container">
-    <div class="card-grid card-grid--stagger" data-reveal-group="up">
-      <div class="article-card">
-      <div class="art-media">SKILLS MISMATCH</div>
-      <div class="art-body">
-        <p class="art-meta">Editorial &middot; Job-oriented mindset</p>
-        <h2>The educated-unemployment paradox</h2>
-        <p>Roughly 700,000 graduates enter Bangladesh&rsquo;s job market each year, but the
-        formal economy generates only about 300,000 viable roles. What that gap does to how
-        students think about the point of a degree.</p>
-      </div>
+    <div class="section-head">
+      <h2 class="section-title">Recurring subjects</h2>
+      <p class="lede">Each follows one of the three lenses the pilot study is built around,
+      so the editorial and the research stay on the same axis.</p>
     </div>
-<div class="article-card">
-      <div class="art-media">THE MEMORIZATION TRAP</div>
-      <div class="art-body">
-        <p class="art-meta">Editorial &middot; Innovation &amp; critical thinking</p>
-        <h2>Escaping the memorisation trap</h2>
-        <p>SSC and HSC exams still reward textbook repetition over comprehension. What
-        that costs in independent thought, and what a competency-based curriculum
-        would need to change on the ground.</p>
-      </div>
-    </div>
-<div class="article-card">
-      <div class="art-media">EDUCATION &amp; MONEY</div>
-      <div class="art-body">
-        <p class="art-meta">Editorial &middot; Perceptions of education</p>
-        <h2>Education = money? Rethinking what learning is for</h2>
-        <p>For many families, a degree is a financial investment first: a ticket
-        exchanged for a stable job. This pilot asks what gets lost when employment becomes
-        education&rsquo;s only measure of success.</p>
-      </div>
-    </div>
-    </div>
+
+    <ol class="toc" data-reveal-group="up">
+      <li class="toc-row">
+        <span class="toc-num">01</span>
+        <span class="toc-body">
+          <span class="toc-title">Skills mismatch</span>
+          <span class="toc-note">Roughly 700,000 graduates enter Bangladesh&rsquo;s job market
+          each year against about 300,000 viable formal roles, and what that gap does to how
+          students read the point of a degree.</span>
+        </span>
+        <span class="toc-lens">Job-oriented mindset</span>
+      </li>
+      <li class="toc-row">
+        <span class="toc-num">02</span>
+        <span class="toc-body">
+          <span class="toc-title">The memorisation trap</span>
+          <span class="toc-note">SSC and HSC exams still reward textbook repetition over
+          comprehension. What that costs in independent thought, and what a competency-based
+          curriculum would have to change on the ground.</span>
+        </span>
+        <span class="toc-lens">Innovation &amp; critical thinking</span>
+      </li>
+      <li class="toc-row">
+        <span class="toc-num">03</span>
+        <span class="toc-body">
+          <span class="toc-title">Education and money</span>
+          <span class="toc-note">For many families a degree is a financial instrument first,
+          a ticket exchanged for a stable job. What gets lost when employment becomes
+          education&rsquo;s only measure of success.</span>
+        </span>
+        <span class="toc-lens">Perceptions of education</span>
+      </li>
+    </ol>
   </div>
 </section>
