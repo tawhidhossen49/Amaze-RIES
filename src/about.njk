@@ -80,23 +80,3 @@ layout: layouts/base.njk
     </div>
   </div>
 </section>
-
-<section class="section section--paper">
-  <div class="container">
-    <div class="section-head" data-reveal="up">
-      <div>
-        <p class="eyebrow" data-reveal="up">Leadership</p>
-        <h2 class="section-title" data-reveal="up">Our research team</h2>
-      </div>
-      <p class="lede">The proposal defines these roles for the Amaze Researcher Team, which is still being staffed, so names below are placeholders <span class="placeholder">placeholder</span>
-      until real people are confirmed.</p>
-    </div>
-    <div class="people-grid" data-reveal-group="up">
-{%- for person in team %}
-      {% include "partials/people-card.njk" %}
-{%- endfor %}
-    </div>
-    <p class="form-note u-mt-8">Data Collectors is an open cohort of members
-    and associates rather than a single seat. See <a href="join.html">how to join</a>.</p>
-  </div>
-</section>
