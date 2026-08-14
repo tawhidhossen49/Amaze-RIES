@@ -90,6 +90,12 @@
      light ground while reading as the same colour. Use --brass for
      rules, borders and icons; --brass-ink whenever it's actual text. */
   --brass-ink:#7E5D26;
+  /* Brass for eyebrows set over photography. --brass-pale is a mid-tone
+     gold; at 12px over an unpredictable photographic backdrop it lands at
+     4.2-4.4:1 however hard the scrim is pushed, and darkening the scrim
+     far enough to rescue it would bury the photograph. Lifting the type
+     instead is stable across whatever image is dropped in later. */
+  --brass-on-photo:#E3D2A6;
   --brass-bright:#B08D45;
   --brass-pale:#DCC793;
 
@@ -873,20 +879,20 @@ h3.card-title{font-size:var(--t-lg);}
 .page-hero--cover::before{
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:
-    linear-gradient(180deg,rgba(7,34,15,.74) 0%,rgba(7,34,15,.52) 36%,rgba(7,34,15,.88) 100%),
-    linear-gradient(96deg,rgba(7,34,15,.80) 0%,rgba(7,34,15,.50) 60%,rgba(7,34,15,.10) 100%);
+    linear-gradient(180deg,rgba(7,34,15,.78) 0%,rgba(7,34,15,.64) 36%,rgba(7,34,15,.90) 100%),
+    linear-gradient(96deg,rgba(7,34,15,.84) 0%,rgba(7,34,15,.62) 60%,rgba(7,34,15,.22) 100%);
 }
 .page-hero--cover > .container{width:100%;}
 .page-hero--cover h1{color:#FCFDFA;max-width:17ch;}
 .page-hero--cover .lede{color:rgba(241,239,232,.95);}
-.page-hero--cover .eyebrow{color:var(--brass-pale);}
+.page-hero--cover .eyebrow{color:var(--brass-on-photo);}
 .page-hero--cover .breadcrumb{color:rgba(241,239,232,.92);}
 .page-hero--cover .breadcrumb a{color:rgba(241,239,232,.92);}
 .page-hero--cover .breadcrumb a:hover{color:#fff;}
 @media (max-width:700px){
   .page-hero--cover{min-height:min(46svh,400px);}
   .page-hero--cover::before{
-    background:linear-gradient(178deg,rgba(7,34,15,.76) 0%,rgba(7,34,15,.66) 40%,rgba(7,34,15,.92) 100%);
+    background:linear-gradient(178deg,rgba(7,34,15,.80) 0%,rgba(7,34,15,.76) 40%,rgba(7,34,15,.94) 100%);
   }
 }
 @supports not (height:1svh){
@@ -1562,7 +1568,7 @@ h3.card-title{font-size:var(--t-lg);}
 .full-bleed-media img{width:100%;height:100%;object-fit:cover;}
 .full-bleed::before{
   content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(92deg,rgba(7,34,15,.9) 0%,rgba(7,34,15,.72) 46%,rgba(7,34,15,.3) 100%);
+  background:linear-gradient(92deg,rgba(7,34,15,.96) 0%,rgba(7,34,15,.89) 46%,rgba(7,34,15,.62) 100%);
 }
 .full-bleed > .container{position:relative;z-index:1;width:100%;
   padding-top:var(--sp-section-tight);padding-bottom:var(--sp-section-tight);}
@@ -1574,7 +1580,7 @@ h3.card-title{font-size:var(--t-lg);}
 .full-bleed .actions{display:flex;flex-wrap:wrap;gap:16px 26px;align-items:center;margin-top:var(--sp-6);}
 .full-bleed .arrow-cta-icon{background:var(--ground);color:var(--ink);}
 .full-bleed .arrow-cta:hover .arrow-cta-icon{background:#fff;}
-.full-bleed .eyebrow{color:var(--brass-pale);}
+.full-bleed .eyebrow{color:var(--brass-on-photo);}
 @media (max-width:700px){
   .full-bleed::before{
     background:linear-gradient(178deg,rgba(7,34,15,.78) 0%,rgba(7,34,15,.86) 100%);
